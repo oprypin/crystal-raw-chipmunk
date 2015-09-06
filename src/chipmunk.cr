@@ -1114,7 +1114,7 @@ module Chipmunk
   end
 
   def bb_new(l : Float, b : Float, r : Float, t : Float) : CP::BB
-    CP::CP::BB.new(l: l, b: b, r: r, t: t)
+    CP::BB.new(l: l, b: b, r: r, t: t)
   end
 
   def bb_new_for_extents(c : CP::Vect, hw : Float, hh : Float) : CP::BB
