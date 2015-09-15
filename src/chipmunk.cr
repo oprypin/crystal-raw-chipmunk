@@ -1188,10 +1188,10 @@ module Chipmunk
 
   def bb_wrap_vect(bb : CP::BB, v : CP::Vect) : CP::Vect
     dx = fabs(bb.r - bb.l)
-    modx = fmod(v.x - bb.l, dx)
+    modx = (v.x - bb.l).fdiv(dx)
     x = modx > 0.0 ? modx : modx + dx
     dy = fabs(bb.t - bb.b)
-    mody = fmod(v.y - bb.b, dy)
+    mody = (v.y - bb.b).fdiv(dy)
     y = mody > 0.0 ? mody : mody + dy
     v(x + bb.l, y + bb.b)
   end
