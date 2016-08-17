@@ -1,6 +1,6 @@
 @[Link("chipmunk")]
 lib CP
-  fun message = "cpMessage"(condition : UInt8*, file : UInt8*, line : Int32, is_error : Int32, is_hard_error : Int32, message : UInt8*, ...) : Void
+  fun message = cpMessage(condition : UInt8*, file : UInt8*, line : Int32, is_error : Int32, is_hard_error : Int32, message : UInt8*, ...)
   
   alias Float = Float64
   
@@ -90,7 +90,7 @@ lib CP
   
   alias SpatialIndexBBFunc = Void* -> BB
   
-  alias SpatialIndexIteratorFunc = (Void*, Void*) -> Void
+  alias SpatialIndexIteratorFunc = (Void*, Void*) ->
   
   alias SpatialIndexQueryFunc = (Void*, Void*, CollisionID, Void*) -> CollisionID
   
@@ -105,57 +105,57 @@ lib CP
   
   type SpaceHash = Void*
   
-  fun space_hash_alloc = "cpSpaceHashAlloc"() : SpaceHash
+  fun space_hash_alloc = cpSpaceHashAlloc() : SpaceHash
   
-  fun space_hash_init = "cpSpaceHashInit"(hash : SpaceHash, celldim : Float, numcells : Int32, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun space_hash_init = cpSpaceHashInit(hash : SpaceHash, celldim : Float, numcells : Int32, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
-  fun space_hash_new = "cpSpaceHashNew"(celldim : Float, cells : Int32, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun space_hash_new = cpSpaceHashNew(celldim : Float, cells : Int32, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
-  fun space_hash_resize = "cpSpaceHashResize"(hash : SpaceHash, celldim : Float, numcells : Int32) : Void
+  fun space_hash_resize = cpSpaceHashResize(hash : SpaceHash, celldim : Float, numcells : Int32)
   
   type BBTree = Void*
   
-  fun bb_tree_alloc = "cpBBTreeAlloc"() : BBTree
+  fun bb_tree_alloc = cpBBTreeAlloc() : BBTree
   
-  fun bb_tree_init = "cpBBTreeInit"(tree : BBTree, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun bb_tree_init = cpBBTreeInit(tree : BBTree, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
-  fun bb_tree_new = "cpBBTreeNew"(bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun bb_tree_new = cpBBTreeNew(bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
-  fun bb_tree_optimize = "cpBBTreeOptimize"(index : SpatialIndex*) : Void
+  fun bb_tree_optimize = cpBBTreeOptimize(index : SpatialIndex*)
   
   alias BBTreeVelocityFunc = Void* -> Vect
   
-  fun bb_tree_set_velocity_func = "cpBBTreeSetVelocityFunc"(index : SpatialIndex*, func : BBTreeVelocityFunc) : Void
+  fun bb_tree_set_velocity_func = cpBBTreeSetVelocityFunc(index : SpatialIndex*, func : BBTreeVelocityFunc)
   
   type Sweep1D = Void*
   
-  fun sweep1d_alloc = "cpSweep1DAlloc"() : Sweep1D
+  fun sweep1d_alloc = cpSweep1DAlloc() : Sweep1D
   
-  fun sweep1d_init = "cpSweep1DInit"(sweep : Sweep1D, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun sweep1d_init = cpSweep1DInit(sweep : Sweep1D, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
-  fun sweep1d_new = "cpSweep1DNew"(bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun sweep1d_new = cpSweep1DNew(bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
-  alias SpatialIndexDestroyImpl = SpatialIndex* -> Void
+  alias SpatialIndexDestroyImpl = SpatialIndex* ->
   
   alias SpatialIndexCountImpl = SpatialIndex* -> Int32
   
-  alias SpatialIndexEachImpl = (SpatialIndex*, SpatialIndexIteratorFunc, Void*) -> Void
+  alias SpatialIndexEachImpl = (SpatialIndex*, SpatialIndexIteratorFunc, Void*) ->
   
   alias SpatialIndexContainsImpl = (SpatialIndex*, Void*, HashValue) -> Bool
   
-  alias SpatialIndexInsertImpl = (SpatialIndex*, Void*, HashValue) -> Void
+  alias SpatialIndexInsertImpl = (SpatialIndex*, Void*, HashValue) ->
   
-  alias SpatialIndexRemoveImpl = (SpatialIndex*, Void*, HashValue) -> Void
+  alias SpatialIndexRemoveImpl = (SpatialIndex*, Void*, HashValue) ->
   
-  alias SpatialIndexReindexImpl = SpatialIndex* -> Void
+  alias SpatialIndexReindexImpl = SpatialIndex* ->
   
-  alias SpatialIndexReindexObjectImpl = (SpatialIndex*, Void*, HashValue) -> Void
+  alias SpatialIndexReindexObjectImpl = (SpatialIndex*, Void*, HashValue) ->
   
-  alias SpatialIndexReindexQueryImpl = (SpatialIndex*, SpatialIndexQueryFunc, Void*) -> Void
+  alias SpatialIndexReindexQueryImpl = (SpatialIndex*, SpatialIndexQueryFunc, Void*) ->
   
-  alias SpatialIndexQueryImpl = (SpatialIndex*, Void*, BB, SpatialIndexQueryFunc, Void*) -> Void
+  alias SpatialIndexQueryImpl = (SpatialIndex*, Void*, BB, SpatialIndexQueryFunc, Void*) ->
   
-  alias SpatialIndexSegmentQueryImpl = (SpatialIndex*, Void*, Vect, Vect, Float, SpatialIndexSegmentQueryFunc, Void*) -> Void
+  alias SpatialIndexSegmentQueryImpl = (SpatialIndex*, Void*, Vect, Vect, Float, SpatialIndexSegmentQueryFunc, Void*) ->
   
   struct SpatialIndexClass
     destroy : SpatialIndexDestroyImpl
@@ -171,35 +171,35 @@ lib CP
     segment_query : SpatialIndexSegmentQueryImpl
   end
   
-  fun spatial_index_free = "cpSpatialIndexFree"(index : SpatialIndex*) : Void
+  fun spatial_index_free = cpSpatialIndexFree(index : SpatialIndex*)
   
-  fun spatial_index_collide_static = "cpSpatialIndexCollideStatic"(dynamic_index : SpatialIndex*, static_index : SpatialIndex*, func : SpatialIndexQueryFunc, data : Void*) : Void
+  fun spatial_index_collide_static = cpSpatialIndexCollideStatic(dynamic_index : SpatialIndex*, static_index : SpatialIndex*, func : SpatialIndexQueryFunc, data : Void*)
   
-  fun arbiter_get_restitution = "cpArbiterGetRestitution"(arb : Arbiter) : Float
+  fun arbiter_get_restitution = cpArbiterGetRestitution(arb : Arbiter) : Float
   
-  fun arbiter_set_restitution = "cpArbiterSetRestitution"(arb : Arbiter, restitution : Float) : Void
+  fun arbiter_set_restitution = cpArbiterSetRestitution(arb : Arbiter, restitution : Float)
   
-  fun arbiter_get_friction = "cpArbiterGetFriction"(arb : Arbiter) : Float
+  fun arbiter_get_friction = cpArbiterGetFriction(arb : Arbiter) : Float
   
-  fun arbiter_set_friction = "cpArbiterSetFriction"(arb : Arbiter, friction : Float) : Void
+  fun arbiter_set_friction = cpArbiterSetFriction(arb : Arbiter, friction : Float)
   
-  fun arbiter_get_surface_velocity = "cpArbiterGetSurfaceVelocity"(arb : Arbiter) : Vect
+  fun arbiter_get_surface_velocity = cpArbiterGetSurfaceVelocity(arb : Arbiter) : Vect
   
-  fun arbiter_set_surface_velocity = "cpArbiterSetSurfaceVelocity"(arb : Arbiter, vr : Vect) : Void
+  fun arbiter_set_surface_velocity = cpArbiterSetSurfaceVelocity(arb : Arbiter, vr : Vect)
   
-  fun arbiter_get_user_data = "cpArbiterGetUserData"(arb : Arbiter) : DataPointer
+  fun arbiter_get_user_data = cpArbiterGetUserData(arb : Arbiter) : DataPointer
   
-  fun arbiter_set_user_data = "cpArbiterSetUserData"(arb : Arbiter, user_data : DataPointer) : Void
+  fun arbiter_set_user_data = cpArbiterSetUserData(arb : Arbiter, user_data : DataPointer)
   
-  fun arbiter_total_impulse = "cpArbiterTotalImpulse"(arb : Arbiter) : Vect
+  fun arbiter_total_impulse = cpArbiterTotalImpulse(arb : Arbiter) : Vect
   
-  fun arbiter_total_ke = "cpArbiterTotalKE"(arb : Arbiter) : Float
+  fun arbiter_total_ke = cpArbiterTotalKE(arb : Arbiter) : Float
   
-  fun arbiter_ignore = "cpArbiterIgnore"(arb : Arbiter) : Bool
+  fun arbiter_ignore = cpArbiterIgnore(arb : Arbiter) : Bool
   
-  fun arbiter_get_shapes = "cpArbiterGetShapes"(arb : Arbiter, a : Shape, b : Shape) : Void
+  fun arbiter_get_shapes = cpArbiterGetShapes(arb : Arbiter, a : Shape, b : Shape)
   
-  fun arbiter_get_bodies = "cpArbiterGetBodies"(arb : Arbiter, a : Body, b : Body) : Void
+  fun arbiter_get_bodies = cpArbiterGetBodies(arb : Arbiter, a : Body, b : Body)
   
   struct Anonymous1
     point_a : Vect
@@ -213,39 +213,39 @@ lib CP
     points : Anonymous1[2]
   end
   
-  fun arbiter_get_contact_point_set = "cpArbiterGetContactPointSet"(arb : Arbiter) : ContactPointSet
+  fun arbiter_get_contact_point_set = cpArbiterGetContactPointSet(arb : Arbiter) : ContactPointSet
   
-  fun arbiter_set_contact_point_set = "cpArbiterSetContactPointSet"(arb : Arbiter, set : ContactPointSet*) : Void
+  fun arbiter_set_contact_point_set = cpArbiterSetContactPointSet(arb : Arbiter, set : ContactPointSet*)
   
-  fun arbiter_is_first_contact = "cpArbiterIsFirstContact"(arb : Arbiter) : Bool
+  fun arbiter_is_first_contact = cpArbiterIsFirstContact(arb : Arbiter) : Bool
   
-  fun arbiter_is_removal = "cpArbiterIsRemoval"(arb : Arbiter) : Bool
+  fun arbiter_is_removal = cpArbiterIsRemoval(arb : Arbiter) : Bool
   
-  fun arbiter_get_count = "cpArbiterGetCount"(arb : Arbiter) : Int32
+  fun arbiter_get_count = cpArbiterGetCount(arb : Arbiter) : Int32
   
-  fun arbiter_get_normal = "cpArbiterGetNormal"(arb : Arbiter) : Vect
+  fun arbiter_get_normal = cpArbiterGetNormal(arb : Arbiter) : Vect
   
-  fun arbiter_get_point_a = "cpArbiterGetPointA"(arb : Arbiter, i : Int32) : Vect
+  fun arbiter_get_point_a = cpArbiterGetPointA(arb : Arbiter, i : Int32) : Vect
   
-  fun arbiter_get_point_b = "cpArbiterGetPointB"(arb : Arbiter, i : Int32) : Vect
+  fun arbiter_get_point_b = cpArbiterGetPointB(arb : Arbiter, i : Int32) : Vect
   
-  fun arbiter_get_depth = "cpArbiterGetDepth"(arb : Arbiter, i : Int32) : Float
+  fun arbiter_get_depth = cpArbiterGetDepth(arb : Arbiter, i : Int32) : Float
   
-  fun arbiter_call_wildcard_begin_a = "cpArbiterCallWildcardBeginA"(arb : Arbiter, space : Space) : Bool
+  fun arbiter_call_wildcard_begin_a = cpArbiterCallWildcardBeginA(arb : Arbiter, space : Space) : Bool
   
-  fun arbiter_call_wildcard_begin_b = "cpArbiterCallWildcardBeginB"(arb : Arbiter, space : Space) : Bool
+  fun arbiter_call_wildcard_begin_b = cpArbiterCallWildcardBeginB(arb : Arbiter, space : Space) : Bool
   
-  fun arbiter_call_wildcard_pre_solve_a = "cpArbiterCallWildcardPreSolveA"(arb : Arbiter, space : Space) : Bool
+  fun arbiter_call_wildcard_pre_solve_a = cpArbiterCallWildcardPreSolveA(arb : Arbiter, space : Space) : Bool
   
-  fun arbiter_call_wildcard_pre_solve_b = "cpArbiterCallWildcardPreSolveB"(arb : Arbiter, space : Space) : Bool
+  fun arbiter_call_wildcard_pre_solve_b = cpArbiterCallWildcardPreSolveB(arb : Arbiter, space : Space) : Bool
   
-  fun arbiter_call_wildcard_post_solve_a = "cpArbiterCallWildcardPostSolveA"(arb : Arbiter, space : Space) : Void
+  fun arbiter_call_wildcard_post_solve_a = cpArbiterCallWildcardPostSolveA(arb : Arbiter, space : Space)
   
-  fun arbiter_call_wildcard_post_solve_b = "cpArbiterCallWildcardPostSolveB"(arb : Arbiter, space : Space) : Void
+  fun arbiter_call_wildcard_post_solve_b = cpArbiterCallWildcardPostSolveB(arb : Arbiter, space : Space)
   
-  fun arbiter_call_wildcard_separate_a = "cpArbiterCallWildcardSeparateA"(arb : Arbiter, space : Space) : Void
+  fun arbiter_call_wildcard_separate_a = cpArbiterCallWildcardSeparateA(arb : Arbiter, space : Space)
   
-  fun arbiter_call_wildcard_separate_b = "cpArbiterCallWildcardSeparateB"(arb : Arbiter, space : Space) : Void
+  fun arbiter_call_wildcard_separate_b = cpArbiterCallWildcardSeparateB(arb : Arbiter, space : Space)
   
   enum BodyType
     BODY_TYPE_DYNAMIC
@@ -253,119 +253,119 @@ lib CP
     BODY_TYPE_STATIC
   end
   
-  alias BodyVelocityFunc = (Body, Vect, Float, Float) -> Void
+  alias BodyVelocityFunc = (Body, Vect, Float, Float) ->
   
-  alias BodyPositionFunc = (Body, Float) -> Void
+  alias BodyPositionFunc = (Body, Float) ->
   
-  fun body_alloc = "cpBodyAlloc"() : Body
+  fun body_alloc = cpBodyAlloc() : Body
   
-  fun body_init = "cpBodyInit"(body : Body, mass : Float, moment : Float) : Body
+  fun body_init = cpBodyInit(body : Body, mass : Float, moment : Float) : Body
   
-  fun body_new = "cpBodyNew"(mass : Float, moment : Float) : Body
+  fun body_new = cpBodyNew(mass : Float, moment : Float) : Body
   
-  fun body_new_kinematic = "cpBodyNewKinematic"() : Body
+  fun body_new_kinematic = cpBodyNewKinematic() : Body
   
-  fun body_new_static = "cpBodyNewStatic"() : Body
+  fun body_new_static = cpBodyNewStatic() : Body
   
-  fun body_destroy = "cpBodyDestroy"(body : Body) : Void
+  fun body_destroy = cpBodyDestroy(body : Body)
   
-  fun body_free = "cpBodyFree"(body : Body) : Void
+  fun body_free = cpBodyFree(body : Body)
   
-  fun body_activate = "cpBodyActivate"(body : Body) : Void
+  fun body_activate = cpBodyActivate(body : Body)
   
-  fun body_activate_static = "cpBodyActivateStatic"(body : Body, filter : Shape) : Void
+  fun body_activate_static = cpBodyActivateStatic(body : Body, filter : Shape)
   
-  fun body_sleep = "cpBodySleep"(body : Body) : Void
+  fun body_sleep = cpBodySleep(body : Body)
   
-  fun body_sleep_with_group = "cpBodySleepWithGroup"(body : Body, group : Body) : Void
+  fun body_sleep_with_group = cpBodySleepWithGroup(body : Body, group : Body)
   
-  fun body_is_sleeping = "cpBodyIsSleeping"(body : Body) : Bool
+  fun body_is_sleeping = cpBodyIsSleeping(body : Body) : Bool
   
-  fun body_get_type = "cpBodyGetType"(body : Body) : BodyType
+  fun body_get_type = cpBodyGetType(body : Body) : BodyType
   
-  fun body_set_type = "cpBodySetType"(body : Body, type : BodyType) : Void
+  fun body_set_type = cpBodySetType(body : Body, type : BodyType)
   
-  fun body_get_space = "cpBodyGetSpace"(body : Body) : Space
+  fun body_get_space = cpBodyGetSpace(body : Body) : Space
   
-  fun body_get_mass = "cpBodyGetMass"(body : Body) : Float
+  fun body_get_mass = cpBodyGetMass(body : Body) : Float
   
-  fun body_set_mass = "cpBodySetMass"(body : Body, m : Float) : Void
+  fun body_set_mass = cpBodySetMass(body : Body, m : Float)
   
-  fun body_get_moment = "cpBodyGetMoment"(body : Body) : Float
+  fun body_get_moment = cpBodyGetMoment(body : Body) : Float
   
-  fun body_set_moment = "cpBodySetMoment"(body : Body, i : Float) : Void
+  fun body_set_moment = cpBodySetMoment(body : Body, i : Float)
   
-  fun body_get_position = "cpBodyGetPosition"(body : Body) : Vect
+  fun body_get_position = cpBodyGetPosition(body : Body) : Vect
   
-  fun body_set_position = "cpBodySetPosition"(body : Body, pos : Vect) : Void
+  fun body_set_position = cpBodySetPosition(body : Body, pos : Vect)
   
-  fun body_get_center_of_gravity = "cpBodyGetCenterOfGravity"(body : Body) : Vect
+  fun body_get_center_of_gravity = cpBodyGetCenterOfGravity(body : Body) : Vect
   
-  fun body_set_center_of_gravity = "cpBodySetCenterOfGravity"(body : Body, cog : Vect) : Void
+  fun body_set_center_of_gravity = cpBodySetCenterOfGravity(body : Body, cog : Vect)
   
-  fun body_get_velocity = "cpBodyGetVelocity"(body : Body) : Vect
+  fun body_get_velocity = cpBodyGetVelocity(body : Body) : Vect
   
-  fun body_set_velocity = "cpBodySetVelocity"(body : Body, velocity : Vect) : Void
+  fun body_set_velocity = cpBodySetVelocity(body : Body, velocity : Vect)
   
-  fun body_get_force = "cpBodyGetForce"(body : Body) : Vect
+  fun body_get_force = cpBodyGetForce(body : Body) : Vect
   
-  fun body_set_force = "cpBodySetForce"(body : Body, force : Vect) : Void
+  fun body_set_force = cpBodySetForce(body : Body, force : Vect)
   
-  fun body_get_angle = "cpBodyGetAngle"(body : Body) : Float
+  fun body_get_angle = cpBodyGetAngle(body : Body) : Float
   
-  fun body_set_angle = "cpBodySetAngle"(body : Body, a : Float) : Void
+  fun body_set_angle = cpBodySetAngle(body : Body, a : Float)
   
-  fun body_get_angular_velocity = "cpBodyGetAngularVelocity"(body : Body) : Float
+  fun body_get_angular_velocity = cpBodyGetAngularVelocity(body : Body) : Float
   
-  fun body_set_angular_velocity = "cpBodySetAngularVelocity"(body : Body, angular_velocity : Float) : Void
+  fun body_set_angular_velocity = cpBodySetAngularVelocity(body : Body, angular_velocity : Float)
   
-  fun body_get_torque = "cpBodyGetTorque"(body : Body) : Float
+  fun body_get_torque = cpBodyGetTorque(body : Body) : Float
   
-  fun body_set_torque = "cpBodySetTorque"(body : Body, torque : Float) : Void
+  fun body_set_torque = cpBodySetTorque(body : Body, torque : Float)
   
-  fun body_get_rotation = "cpBodyGetRotation"(body : Body) : Vect
+  fun body_get_rotation = cpBodyGetRotation(body : Body) : Vect
   
-  fun body_get_user_data = "cpBodyGetUserData"(body : Body) : DataPointer
+  fun body_get_user_data = cpBodyGetUserData(body : Body) : DataPointer
   
-  fun body_set_user_data = "cpBodySetUserData"(body : Body, user_data : DataPointer) : Void
+  fun body_set_user_data = cpBodySetUserData(body : Body, user_data : DataPointer)
   
-  fun body_set_velocity_update_func = "cpBodySetVelocityUpdateFunc"(body : Body, velocity_func : BodyVelocityFunc) : Void
+  fun body_set_velocity_update_func = cpBodySetVelocityUpdateFunc(body : Body, velocity_func : BodyVelocityFunc)
   
-  fun body_set_position_update_func = "cpBodySetPositionUpdateFunc"(body : Body, position_func : BodyPositionFunc) : Void
+  fun body_set_position_update_func = cpBodySetPositionUpdateFunc(body : Body, position_func : BodyPositionFunc)
   
-  fun body_update_velocity = "cpBodyUpdateVelocity"(body : Body, gravity : Vect, damping : Float, dt : Float) : Void
+  fun body_update_velocity = cpBodyUpdateVelocity(body : Body, gravity : Vect, damping : Float, dt : Float)
   
-  fun body_update_position = "cpBodyUpdatePosition"(body : Body, dt : Float) : Void
+  fun body_update_position = cpBodyUpdatePosition(body : Body, dt : Float)
   
-  fun body_local_to_world = "cpBodyLocalToWorld"(body : Body, point : Vect) : Vect
+  fun body_local_to_world = cpBodyLocalToWorld(body : Body, point : Vect) : Vect
   
-  fun body_world_to_local = "cpBodyWorldToLocal"(body : Body, point : Vect) : Vect
+  fun body_world_to_local = cpBodyWorldToLocal(body : Body, point : Vect) : Vect
   
-  fun body_apply_force_at_world_point = "cpBodyApplyForceAtWorldPoint"(body : Body, force : Vect, point : Vect) : Void
+  fun body_apply_force_at_world_point = cpBodyApplyForceAtWorldPoint(body : Body, force : Vect, point : Vect)
   
-  fun body_apply_force_at_local_point = "cpBodyApplyForceAtLocalPoint"(body : Body, force : Vect, point : Vect) : Void
+  fun body_apply_force_at_local_point = cpBodyApplyForceAtLocalPoint(body : Body, force : Vect, point : Vect)
+
+  fun body_apply_impulse_at_world_point = cpBodyApplyImpulseAtWorldPoint(body : Body, impulse : Vect, point : Vect)
   
-  fun body_apply_impulse_at_world_point = "cpBodyApplyImpulseAtWorldPoint"(body : Body, impulse : Vect, point : Vect) : Void
+  fun body_apply_impulse_at_local_point = cpBodyApplyImpulseAtLocalPoint(body : Body, impulse : Vect, point : Vect)
   
-  fun body_apply_impulse_at_local_point = "cpBodyApplyImpulseAtLocalPoint"(body : Body, impulse : Vect, point : Vect) : Void
+  fun body_get_velocity_at_world_point = cpBodyGetVelocityAtWorldPoint(body : Body, point : Vect) : Vect
   
-  fun body_get_velocity_at_world_point = "cpBodyGetVelocityAtWorldPoint"(body : Body, point : Vect) : Vect
+  fun body_get_velocity_at_local_point = cpBodyGetVelocityAtLocalPoint(body : Body, point : Vect) : Vect
   
-  fun body_get_velocity_at_local_point = "cpBodyGetVelocityAtLocalPoint"(body : Body, point : Vect) : Vect
+  fun body_kinetic_energy = cpBodyKineticEnergy(body : Body) : Float
   
-  fun body_kinetic_energy = "cpBodyKineticEnergy"(body : Body) : Float
+  alias BodyShapeIteratorFunc = (Body, Shape, Void*) ->
   
-  alias BodyShapeIteratorFunc = (Body, Shape, Void*) -> Void
+  fun body_each_shape = cpBodyEachShape(body : Body, func : BodyShapeIteratorFunc, data : Void*)
   
-  fun body_each_shape = "cpBodyEachShape"(body : Body, func : BodyShapeIteratorFunc, data : Void*) : Void
+  alias BodyConstraintIteratorFunc = (Body, Constraint, Void*) ->
   
-  alias BodyConstraintIteratorFunc = (Body, Constraint, Void*) -> Void
+  fun body_each_constraint = cpBodyEachConstraint(body : Body, func : BodyConstraintIteratorFunc, data : Void*)
   
-  fun body_each_constraint = "cpBodyEachConstraint"(body : Body, func : BodyConstraintIteratorFunc, data : Void*) : Void
+  alias BodyArbiterIteratorFunc = (Body, Arbiter, Void*) ->
   
-  alias BodyArbiterIteratorFunc = (Body, Arbiter, Void*) -> Void
-  
-  fun body_each_arbiter = "cpBodyEachArbiter"(body : Body, func : BodyArbiterIteratorFunc, data : Void*) : Void
+  fun body_each_arbiter = cpBodyEachArbiter(body : Body, func : BodyArbiterIteratorFunc, data : Void*)
   
   struct PointQueryInfo
     shape : Shape
@@ -387,379 +387,379 @@ lib CP
     mask : Bitmask
   end
   
-  fun shape_destroy = "cpShapeDestroy"(shape : Shape) : Void
+  fun shape_destroy = cpShapeDestroy(shape : Shape)
   
-  fun shape_free = "cpShapeFree"(shape : Shape) : Void
+  fun shape_free = cpShapeFree(shape : Shape)
   
-  fun shape_cache_bb = "cpShapeCacheBB"(shape : Shape) : BB
+  fun shape_cache_bb = cpShapeCacheBB(shape : Shape) : BB
   
-  fun shape_update = "cpShapeUpdate"(shape : Shape, transform : Transform) : BB
+  fun shape_update = cpShapeUpdate(shape : Shape, transform : Transform) : BB
   
-  fun shape_point_query = "cpShapePointQuery"(shape : Shape, p : Vect, out : PointQueryInfo*) : Float
+  fun shape_point_query = cpShapePointQuery(shape : Shape, p : Vect, out : PointQueryInfo*) : Float
   
-  fun shape_segment_query = "cpShapeSegmentQuery"(shape : Shape, a : Vect, b : Vect, radius : Float, info : SegmentQueryInfo*) : Bool
+  fun shape_segment_query = cpShapeSegmentQuery(shape : Shape, a : Vect, b : Vect, radius : Float, info : SegmentQueryInfo*) : Bool
   
-  fun shapes_collide = "cpShapesCollide"(a : Shape, b : Shape) : ContactPointSet
+  fun shapes_collide = cpShapesCollide(a : Shape, b : Shape) : ContactPointSet
   
-  fun shape_get_space = "cpShapeGetSpace"(shape : Shape) : Space
+  fun shape_get_space = cpShapeGetSpace(shape : Shape) : Space
   
-  fun shape_get_body = "cpShapeGetBody"(shape : Shape) : Body
+  fun shape_get_body = cpShapeGetBody(shape : Shape) : Body
   
-  fun shape_set_body = "cpShapeSetBody"(shape : Shape, body : Body) : Void
+  fun shape_set_body = cpShapeSetBody(shape : Shape, body : Body)
   
-  fun shape_get_mass = "cpShapeGetMass"(shape : Shape) : Float
+  fun shape_get_mass = cpShapeGetMass(shape : Shape) : Float
   
-  fun shape_set_mass = "cpShapeSetMass"(shape : Shape, mass : Float) : Void
+  fun shape_set_mass = cpShapeSetMass(shape : Shape, mass : Float)
   
-  fun shape_get_density = "cpShapeGetDensity"(shape : Shape) : Float
+  fun shape_get_density = cpShapeGetDensity(shape : Shape) : Float
   
-  fun shape_set_density = "cpShapeSetDensity"(shape : Shape, density : Float) : Void
+  fun shape_set_density = cpShapeSetDensity(shape : Shape, density : Float)
   
-  fun shape_get_moment = "cpShapeGetMoment"(shape : Shape) : Float
+  fun shape_get_moment = cpShapeGetMoment(shape : Shape) : Float
   
-  fun shape_get_area = "cpShapeGetArea"(shape : Shape) : Float
+  fun shape_get_area = cpShapeGetArea(shape : Shape) : Float
   
-  fun shape_get_center_of_gravity = "cpShapeGetCenterOfGravity"(shape : Shape) : Vect
+  fun shape_get_center_of_gravity = cpShapeGetCenterOfGravity(shape : Shape) : Vect
   
-  fun shape_get_bb = "cpShapeGetBB"(shape : Shape) : BB
+  fun shape_get_bb = cpShapeGetBB(shape : Shape) : BB
   
-  fun shape_get_sensor = "cpShapeGetSensor"(shape : Shape) : Bool
+  fun shape_get_sensor = cpShapeGetSensor(shape : Shape) : Bool
   
-  fun shape_set_sensor = "cpShapeSetSensor"(shape : Shape, sensor : Bool) : Void
+  fun shape_set_sensor = cpShapeSetSensor(shape : Shape, sensor : Bool)
   
-  fun shape_get_elasticity = "cpShapeGetElasticity"(shape : Shape) : Float
+  fun shape_get_elasticity = cpShapeGetElasticity(shape : Shape) : Float
   
-  fun shape_set_elasticity = "cpShapeSetElasticity"(shape : Shape, elasticity : Float) : Void
+  fun shape_set_elasticity = cpShapeSetElasticity(shape : Shape, elasticity : Float)
   
-  fun shape_get_friction = "cpShapeGetFriction"(shape : Shape) : Float
+  fun shape_get_friction = cpShapeGetFriction(shape : Shape) : Float
   
-  fun shape_set_friction = "cpShapeSetFriction"(shape : Shape, friction : Float) : Void
+  fun shape_set_friction = cpShapeSetFriction(shape : Shape, friction : Float)
   
-  fun shape_get_surface_velocity = "cpShapeGetSurfaceVelocity"(shape : Shape) : Vect
+  fun shape_get_surface_velocity = cpShapeGetSurfaceVelocity(shape : Shape) : Vect
   
-  fun shape_set_surface_velocity = "cpShapeSetSurfaceVelocity"(shape : Shape, surface_velocity : Vect) : Void
+  fun shape_set_surface_velocity = cpShapeSetSurfaceVelocity(shape : Shape, surface_velocity : Vect)
   
-  fun shape_get_user_data = "cpShapeGetUserData"(shape : Shape) : DataPointer
+  fun shape_get_user_data = cpShapeGetUserData(shape : Shape) : DataPointer
   
-  fun shape_set_user_data = "cpShapeSetUserData"(shape : Shape, user_data : DataPointer) : Void
+  fun shape_set_user_data = cpShapeSetUserData(shape : Shape, user_data : DataPointer)
   
-  fun shape_get_collision_type = "cpShapeGetCollisionType"(shape : Shape) : CollisionType
+  fun shape_get_collision_type = cpShapeGetCollisionType(shape : Shape) : CollisionType
   
-  fun shape_set_collision_type = "cpShapeSetCollisionType"(shape : Shape, collision_type : CollisionType) : Void
+  fun shape_set_collision_type = cpShapeSetCollisionType(shape : Shape, collision_type : CollisionType)
   
-  fun shape_get_filter = "cpShapeGetFilter"(shape : Shape) : ShapeFilter
+  fun shape_get_filter = cpShapeGetFilter(shape : Shape) : ShapeFilter
   
-  fun shape_set_filter = "cpShapeSetFilter"(shape : Shape, filter : ShapeFilter) : Void
+  fun shape_set_filter = cpShapeSetFilter(shape : Shape, filter : ShapeFilter)
   
-  fun circle_shape_alloc = "cpCircleShapeAlloc"() : CircleShape
+  fun circle_shape_alloc = cpCircleShapeAlloc() : CircleShape
   
-  fun circle_shape_init = "cpCircleShapeInit"(circle : CircleShape, body : Body, radius : Float, offset : Vect) : CircleShape
+  fun circle_shape_init = cpCircleShapeInit(circle : CircleShape, body : Body, radius : Float, offset : Vect) : CircleShape
   
-  fun circle_shape_new = "cpCircleShapeNew"(body : Body, radius : Float, offset : Vect) : Shape
+  fun circle_shape_new = cpCircleShapeNew(body : Body, radius : Float, offset : Vect) : Shape
   
-  fun circle_shape_get_offset = "cpCircleShapeGetOffset"(shape : Shape) : Vect
+  fun circle_shape_get_offset = cpCircleShapeGetOffset(shape : Shape) : Vect
   
-  fun circle_shape_get_radius = "cpCircleShapeGetRadius"(shape : Shape) : Float
+  fun circle_shape_get_radius = cpCircleShapeGetRadius(shape : Shape) : Float
   
-  fun segment_shape_alloc = "cpSegmentShapeAlloc"() : SegmentShape
+  fun segment_shape_alloc = cpSegmentShapeAlloc() : SegmentShape
   
-  fun segment_shape_init = "cpSegmentShapeInit"(seg : SegmentShape, body : Body, a : Vect, b : Vect, radius : Float) : SegmentShape
+  fun segment_shape_init = cpSegmentShapeInit(seg : SegmentShape, body : Body, a : Vect, b : Vect, radius : Float) : SegmentShape
   
-  fun segment_shape_new = "cpSegmentShapeNew"(body : Body, a : Vect, b : Vect, radius : Float) : Shape
+  fun segment_shape_new = cpSegmentShapeNew(body : Body, a : Vect, b : Vect, radius : Float) : Shape
   
-  fun segment_shape_set_neighbors = "cpSegmentShapeSetNeighbors"(shape : Shape, prev : Vect, next_ : Vect) : Void
+  fun segment_shape_set_neighbors = cpSegmentShapeSetNeighbors(shape : Shape, prev : Vect, next_ : Vect)
   
-  fun segment_shape_get_a = "cpSegmentShapeGetA"(shape : Shape) : Vect
+  fun segment_shape_get_a = cpSegmentShapeGetA(shape : Shape) : Vect
   
-  fun segment_shape_get_b = "cpSegmentShapeGetB"(shape : Shape) : Vect
+  fun segment_shape_get_b = cpSegmentShapeGetB(shape : Shape) : Vect
   
-  fun segment_shape_get_normal = "cpSegmentShapeGetNormal"(shape : Shape) : Vect
+  fun segment_shape_get_normal = cpSegmentShapeGetNormal(shape : Shape) : Vect
   
-  fun segment_shape_get_radius = "cpSegmentShapeGetRadius"(shape : Shape) : Float
+  fun segment_shape_get_radius = cpSegmentShapeGetRadius(shape : Shape) : Float
   
-  fun poly_shape_alloc = "cpPolyShapeAlloc"() : PolyShape
+  fun poly_shape_alloc = cpPolyShapeAlloc() : PolyShape
   
-  fun poly_shape_init = "cpPolyShapeInit"(poly : PolyShape, body : Body, count : Int32, verts : Vect*, transform : Transform, radius : Float) : PolyShape
+  fun poly_shape_init = cpPolyShapeInit(poly : PolyShape, body : Body, count : Int32, verts : Vect*, transform : Transform, radius : Float) : PolyShape
   
-  fun poly_shape_init_raw = "cpPolyShapeInitRaw"(poly : PolyShape, body : Body, count : Int32, verts : Vect*, radius : Float) : PolyShape
+  fun poly_shape_init_raw = cpPolyShapeInitRaw(poly : PolyShape, body : Body, count : Int32, verts : Vect*, radius : Float) : PolyShape
   
-  fun poly_shape_new = "cpPolyShapeNew"(body : Body, count : Int32, verts : Vect*, transform : Transform, radius : Float) : Shape
+  fun poly_shape_new = cpPolyShapeNew(body : Body, count : Int32, verts : Vect*, transform : Transform, radius : Float) : Shape
   
-  fun poly_shape_new_raw = "cpPolyShapeNewRaw"(body : Body, count : Int32, verts : Vect*, radius : Float) : Shape
+  fun poly_shape_new_raw = cpPolyShapeNewRaw(body : Body, count : Int32, verts : Vect*, radius : Float) : Shape
   
-  fun box_shape_init = "cpBoxShapeInit"(poly : PolyShape, body : Body, width : Float, height : Float, radius : Float) : PolyShape
+  fun box_shape_init = cpBoxShapeInit(poly : PolyShape, body : Body, width : Float, height : Float, radius : Float) : PolyShape
   
-  fun box_shape_init2 = "cpBoxShapeInit2"(poly : PolyShape, body : Body, box : BB, radius : Float) : PolyShape
+  fun box_shape_init2 = cpBoxShapeInit2(poly : PolyShape, body : Body, box : BB, radius : Float) : PolyShape
   
-  fun box_shape_new = "cpBoxShapeNew"(body : Body, width : Float, height : Float, radius : Float) : Shape
+  fun box_shape_new = cpBoxShapeNew(body : Body, width : Float, height : Float, radius : Float) : Shape
   
-  fun box_shape_new2 = "cpBoxShapeNew2"(body : Body, box : BB, radius : Float) : Shape
+  fun box_shape_new2 = cpBoxShapeNew2(body : Body, box : BB, radius : Float) : Shape
   
-  fun poly_shape_get_count = "cpPolyShapeGetCount"(shape : Shape) : Int32
+  fun poly_shape_get_count = cpPolyShapeGetCount(shape : Shape) : Int32
   
-  fun poly_shape_get_vert = "cpPolyShapeGetVert"(shape : Shape, index : Int32) : Vect
+  fun poly_shape_get_vert = cpPolyShapeGetVert(shape : Shape, index : Int32) : Vect
   
-  fun poly_shape_get_radius = "cpPolyShapeGetRadius"(shape : Shape) : Float
+  fun poly_shape_get_radius = cpPolyShapeGetRadius(shape : Shape) : Float
   
-  alias ConstraintPreSolveFunc = (Constraint, Space) -> Void
+  alias ConstraintPreSolveFunc = (Constraint, Space) ->
   
-  alias ConstraintPostSolveFunc = (Constraint, Space) -> Void
+  alias ConstraintPostSolveFunc = (Constraint, Space) ->
   
-  fun constraint_destroy = "cpConstraintDestroy"(constraint : Constraint) : Void
+  fun constraint_destroy = cpConstraintDestroy(constraint : Constraint)
   
-  fun constraint_free = "cpConstraintFree"(constraint : Constraint) : Void
+  fun constraint_free = cpConstraintFree(constraint : Constraint)
   
-  fun constraint_get_space = "cpConstraintGetSpace"(constraint : Constraint) : Space
+  fun constraint_get_space = cpConstraintGetSpace(constraint : Constraint) : Space
   
-  fun constraint_get_body_a = "cpConstraintGetBodyA"(constraint : Constraint) : Body
+  fun constraint_get_body_a = cpConstraintGetBodyA(constraint : Constraint) : Body
   
-  fun constraint_get_body_b = "cpConstraintGetBodyB"(constraint : Constraint) : Body
+  fun constraint_get_body_b = cpConstraintGetBodyB(constraint : Constraint) : Body
   
-  fun constraint_get_max_force = "cpConstraintGetMaxForce"(constraint : Constraint) : Float
+  fun constraint_get_max_force = cpConstraintGetMaxForce(constraint : Constraint) : Float
   
-  fun constraint_set_max_force = "cpConstraintSetMaxForce"(constraint : Constraint, max_force : Float) : Void
+  fun constraint_set_max_force = cpConstraintSetMaxForce(constraint : Constraint, max_force : Float)
   
-  fun constraint_get_error_bias = "cpConstraintGetErrorBias"(constraint : Constraint) : Float
+  fun constraint_get_error_bias = cpConstraintGetErrorBias(constraint : Constraint) : Float
   
-  fun constraint_set_error_bias = "cpConstraintSetErrorBias"(constraint : Constraint, error_bias : Float) : Void
+  fun constraint_set_error_bias = cpConstraintSetErrorBias(constraint : Constraint, error_bias : Float)
   
-  fun constraint_get_max_bias = "cpConstraintGetMaxBias"(constraint : Constraint) : Float
+  fun constraint_get_max_bias = cpConstraintGetMaxBias(constraint : Constraint) : Float
   
-  fun constraint_set_max_bias = "cpConstraintSetMaxBias"(constraint : Constraint, max_bias : Float) : Void
+  fun constraint_set_max_bias = cpConstraintSetMaxBias(constraint : Constraint, max_bias : Float)
   
-  fun constraint_get_collide_bodies = "cpConstraintGetCollideBodies"(constraint : Constraint) : Bool
+  fun constraint_get_collide_bodies = cpConstraintGetCollideBodies(constraint : Constraint) : Bool
   
-  fun constraint_set_collide_bodies = "cpConstraintSetCollideBodies"(constraint : Constraint, collide_bodies : Bool) : Void
+  fun constraint_set_collide_bodies = cpConstraintSetCollideBodies(constraint : Constraint, collide_bodies : Bool)
   
-  fun constraint_get_pre_solve_func = "cpConstraintGetPreSolveFunc"(constraint : Constraint) : ConstraintPreSolveFunc
+  fun constraint_get_pre_solve_func = cpConstraintGetPreSolveFunc(constraint : Constraint) : ConstraintPreSolveFunc
   
-  fun constraint_set_pre_solve_func = "cpConstraintSetPreSolveFunc"(constraint : Constraint, pre_solve_func : ConstraintPreSolveFunc) : Void
+  fun constraint_set_pre_solve_func = cpConstraintSetPreSolveFunc(constraint : Constraint, pre_solve_func : ConstraintPreSolveFunc)
   
-  fun constraint_get_post_solve_func = "cpConstraintGetPostSolveFunc"(constraint : Constraint) : ConstraintPostSolveFunc
+  fun constraint_get_post_solve_func = cpConstraintGetPostSolveFunc(constraint : Constraint) : ConstraintPostSolveFunc
   
-  fun constraint_set_post_solve_func = "cpConstraintSetPostSolveFunc"(constraint : Constraint, post_solve_func : ConstraintPostSolveFunc) : Void
+  fun constraint_set_post_solve_func = cpConstraintSetPostSolveFunc(constraint : Constraint, post_solve_func : ConstraintPostSolveFunc)
   
-  fun constraint_get_user_data = "cpConstraintGetUserData"(constraint : Constraint) : DataPointer
+  fun constraint_get_user_data = cpConstraintGetUserData(constraint : Constraint) : DataPointer
   
-  fun constraint_set_user_data = "cpConstraintSetUserData"(constraint : Constraint, user_data : DataPointer) : Void
+  fun constraint_set_user_data = cpConstraintSetUserData(constraint : Constraint, user_data : DataPointer)
   
-  fun constraint_get_impulse = "cpConstraintGetImpulse"(constraint : Constraint) : Float
+  fun constraint_get_impulse = cpConstraintGetImpulse(constraint : Constraint) : Float
   
-  fun constraint_is_pin_joint = "cpConstraintIsPinJoint"(constraint : Constraint) : Bool
+  fun constraint_is_pin_joint = cpConstraintIsPinJoint(constraint : Constraint) : Bool
   
-  fun pin_joint_alloc = "cpPinJointAlloc"() : PinJoint
+  fun pin_joint_alloc = cpPinJointAlloc() : PinJoint
   
-  fun pin_joint_init = "cpPinJointInit"(joint : PinJoint, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : PinJoint
+  fun pin_joint_init = cpPinJointInit(joint : PinJoint, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : PinJoint
   
-  fun pin_joint_new = "cpPinJointNew"(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : Constraint
+  fun pin_joint_new = cpPinJointNew(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : Constraint
   
-  fun pin_joint_get_anchor_a = "cpPinJointGetAnchorA"(constraint : Constraint) : Vect
+  fun pin_joint_get_anchor_a = cpPinJointGetAnchorA(constraint : Constraint) : Vect
   
-  fun pin_joint_set_anchor_a = "cpPinJointSetAnchorA"(constraint : Constraint, anchor_a : Vect) : Void
+  fun pin_joint_set_anchor_a = cpPinJointSetAnchorA(constraint : Constraint, anchor_a : Vect)
   
-  fun pin_joint_get_anchor_b = "cpPinJointGetAnchorB"(constraint : Constraint) : Vect
+  fun pin_joint_get_anchor_b = cpPinJointGetAnchorB(constraint : Constraint) : Vect
   
-  fun pin_joint_set_anchor_b = "cpPinJointSetAnchorB"(constraint : Constraint, anchor_b : Vect) : Void
+  fun pin_joint_set_anchor_b = cpPinJointSetAnchorB(constraint : Constraint, anchor_b : Vect)
   
-  fun pin_joint_get_dist = "cpPinJointGetDist"(constraint : Constraint) : Float
+  fun pin_joint_get_dist = cpPinJointGetDist(constraint : Constraint) : Float
   
-  fun pin_joint_set_dist = "cpPinJointSetDist"(constraint : Constraint, dist : Float) : Void
+  fun pin_joint_set_dist = cpPinJointSetDist(constraint : Constraint, dist : Float)
   
-  fun constraint_is_slide_joint = "cpConstraintIsSlideJoint"(constraint : Constraint) : Bool
+  fun constraint_is_slide_joint = cpConstraintIsSlideJoint(constraint : Constraint) : Bool
   
-  fun slide_joint_alloc = "cpSlideJointAlloc"() : SlideJoint
+  fun slide_joint_alloc = cpSlideJointAlloc() : SlideJoint
   
-  fun slide_joint_init = "cpSlideJointInit"(joint : SlideJoint, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, min : Float, max : Float) : SlideJoint
+  fun slide_joint_init = cpSlideJointInit(joint : SlideJoint, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, min : Float, max : Float) : SlideJoint
   
-  fun slide_joint_new = "cpSlideJointNew"(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, min : Float, max : Float) : Constraint
+  fun slide_joint_new = cpSlideJointNew(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, min : Float, max : Float) : Constraint
   
-  fun slide_joint_get_anchor_a = "cpSlideJointGetAnchorA"(constraint : Constraint) : Vect
+  fun slide_joint_get_anchor_a = cpSlideJointGetAnchorA(constraint : Constraint) : Vect
   
-  fun slide_joint_set_anchor_a = "cpSlideJointSetAnchorA"(constraint : Constraint, anchor_a : Vect) : Void
+  fun slide_joint_set_anchor_a = cpSlideJointSetAnchorA(constraint : Constraint, anchor_a : Vect)
   
-  fun slide_joint_get_anchor_b = "cpSlideJointGetAnchorB"(constraint : Constraint) : Vect
+  fun slide_joint_get_anchor_b = cpSlideJointGetAnchorB(constraint : Constraint) : Vect
   
-  fun slide_joint_set_anchor_b = "cpSlideJointSetAnchorB"(constraint : Constraint, anchor_b : Vect) : Void
+  fun slide_joint_set_anchor_b = cpSlideJointSetAnchorB(constraint : Constraint, anchor_b : Vect)
   
-  fun slide_joint_get_min = "cpSlideJointGetMin"(constraint : Constraint) : Float
+  fun slide_joint_get_min = cpSlideJointGetMin(constraint : Constraint) : Float
   
-  fun slide_joint_set_min = "cpSlideJointSetMin"(constraint : Constraint, min : Float) : Void
+  fun slide_joint_set_min = cpSlideJointSetMin(constraint : Constraint, min : Float)
   
-  fun slide_joint_get_max = "cpSlideJointGetMax"(constraint : Constraint) : Float
+  fun slide_joint_get_max = cpSlideJointGetMax(constraint : Constraint) : Float
   
-  fun slide_joint_set_max = "cpSlideJointSetMax"(constraint : Constraint, max : Float) : Void
+  fun slide_joint_set_max = cpSlideJointSetMax(constraint : Constraint, max : Float)
   
-  fun constraint_is_pivot_joint = "cpConstraintIsPivotJoint"(constraint : Constraint) : Bool
+  fun constraint_is_pivot_joint = cpConstraintIsPivotJoint(constraint : Constraint) : Bool
   
-  fun pivot_joint_alloc = "cpPivotJointAlloc"() : PivotJoint
+  fun pivot_joint_alloc = cpPivotJointAlloc() : PivotJoint
   
-  fun pivot_joint_init = "cpPivotJointInit"(joint : PivotJoint, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : PivotJoint
+  fun pivot_joint_init = cpPivotJointInit(joint : PivotJoint, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : PivotJoint
   
-  fun pivot_joint_new = "cpPivotJointNew"(a : Body, b : Body, pivot : Vect) : Constraint
+  fun pivot_joint_new = cpPivotJointNew(a : Body, b : Body, pivot : Vect) : Constraint
   
-  fun pivot_joint_new2 = "cpPivotJointNew2"(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : Constraint
+  fun pivot_joint_new2 = cpPivotJointNew2(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect) : Constraint
   
-  fun pivot_joint_get_anchor_a = "cpPivotJointGetAnchorA"(constraint : Constraint) : Vect
+  fun pivot_joint_get_anchor_a = cpPivotJointGetAnchorA(constraint : Constraint) : Vect
   
-  fun pivot_joint_set_anchor_a = "cpPivotJointSetAnchorA"(constraint : Constraint, anchor_a : Vect) : Void
+  fun pivot_joint_set_anchor_a = cpPivotJointSetAnchorA(constraint : Constraint, anchor_a : Vect)
   
-  fun pivot_joint_get_anchor_b = "cpPivotJointGetAnchorB"(constraint : Constraint) : Vect
+  fun pivot_joint_get_anchor_b = cpPivotJointGetAnchorB(constraint : Constraint) : Vect
   
-  fun pivot_joint_set_anchor_b = "cpPivotJointSetAnchorB"(constraint : Constraint, anchor_b : Vect) : Void
+  fun pivot_joint_set_anchor_b = cpPivotJointSetAnchorB(constraint : Constraint, anchor_b : Vect)
   
-  fun constraint_is_groove_joint = "cpConstraintIsGrooveJoint"(constraint : Constraint) : Bool
+  fun constraint_is_groove_joint = cpConstraintIsGrooveJoint(constraint : Constraint) : Bool
   
-  fun groove_joint_alloc = "cpGrooveJointAlloc"() : GrooveJoint
+  fun groove_joint_alloc = cpGrooveJointAlloc() : GrooveJoint
   
-  fun groove_joint_init = "cpGrooveJointInit"(joint : GrooveJoint, a : Body, b : Body, groove_a : Vect, groove_b : Vect, anchor_b : Vect) : GrooveJoint
+  fun groove_joint_init = cpGrooveJointInit(joint : GrooveJoint, a : Body, b : Body, groove_a : Vect, groove_b : Vect, anchor_b : Vect) : GrooveJoint
   
-  fun groove_joint_new = "cpGrooveJointNew"(a : Body, b : Body, groove_a : Vect, groove_b : Vect, anchor_b : Vect) : Constraint
+  fun groove_joint_new = cpGrooveJointNew(a : Body, b : Body, groove_a : Vect, groove_b : Vect, anchor_b : Vect) : Constraint
   
-  fun groove_joint_get_groove_a = "cpGrooveJointGetGrooveA"(constraint : Constraint) : Vect
+  fun groove_joint_get_groove_a = cpGrooveJointGetGrooveA(constraint : Constraint) : Vect
   
-  fun groove_joint_set_groove_a = "cpGrooveJointSetGrooveA"(constraint : Constraint, groove_a : Vect) : Void
+  fun groove_joint_set_groove_a = cpGrooveJointSetGrooveA(constraint : Constraint, groove_a : Vect)
   
-  fun groove_joint_get_groove_b = "cpGrooveJointGetGrooveB"(constraint : Constraint) : Vect
+  fun groove_joint_get_groove_b = cpGrooveJointGetGrooveB(constraint : Constraint) : Vect
   
-  fun groove_joint_set_groove_b = "cpGrooveJointSetGrooveB"(constraint : Constraint, groove_b : Vect) : Void
+  fun groove_joint_set_groove_b = cpGrooveJointSetGrooveB(constraint : Constraint, groove_b : Vect)
   
-  fun groove_joint_get_anchor_b = "cpGrooveJointGetAnchorB"(constraint : Constraint) : Vect
+  fun groove_joint_get_anchor_b = cpGrooveJointGetAnchorB(constraint : Constraint) : Vect
   
-  fun groove_joint_set_anchor_b = "cpGrooveJointSetAnchorB"(constraint : Constraint, anchor_b : Vect) : Void
+  fun groove_joint_set_anchor_b = cpGrooveJointSetAnchorB(constraint : Constraint, anchor_b : Vect)
   
-  fun constraint_is_damped_spring = "cpConstraintIsDampedSpring"(constraint : Constraint) : Bool
+  fun constraint_is_damped_spring = cpConstraintIsDampedSpring(constraint : Constraint) : Bool
   
   alias DampedSpringForceFunc = (Constraint, Float) -> Float
   
-  fun damped_spring_alloc = "cpDampedSpringAlloc"() : DampedSpring
+  fun damped_spring_alloc = cpDampedSpringAlloc() : DampedSpring
   
-  fun damped_spring_init = "cpDampedSpringInit"(joint : DampedSpring, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, rest_length : Float, stiffness : Float, damping : Float) : DampedSpring
+  fun damped_spring_init = cpDampedSpringInit(joint : DampedSpring, a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, rest_length : Float, stiffness : Float, damping : Float) : DampedSpring
   
-  fun damped_spring_new = "cpDampedSpringNew"(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, rest_length : Float, stiffness : Float, damping : Float) : Constraint
+  fun damped_spring_new = cpDampedSpringNew(a : Body, b : Body, anchor_a : Vect, anchor_b : Vect, rest_length : Float, stiffness : Float, damping : Float) : Constraint
   
-  fun damped_spring_get_anchor_a = "cpDampedSpringGetAnchorA"(constraint : Constraint) : Vect
+  fun damped_spring_get_anchor_a = cpDampedSpringGetAnchorA(constraint : Constraint) : Vect
   
-  fun damped_spring_set_anchor_a = "cpDampedSpringSetAnchorA"(constraint : Constraint, anchor_a : Vect) : Void
+  fun damped_spring_set_anchor_a = cpDampedSpringSetAnchorA(constraint : Constraint, anchor_a : Vect)
   
-  fun damped_spring_get_anchor_b = "cpDampedSpringGetAnchorB"(constraint : Constraint) : Vect
+  fun damped_spring_get_anchor_b = cpDampedSpringGetAnchorB(constraint : Constraint) : Vect
   
-  fun damped_spring_set_anchor_b = "cpDampedSpringSetAnchorB"(constraint : Constraint, anchor_b : Vect) : Void
+  fun damped_spring_set_anchor_b = cpDampedSpringSetAnchorB(constraint : Constraint, anchor_b : Vect)
   
-  fun damped_spring_get_rest_length = "cpDampedSpringGetRestLength"(constraint : Constraint) : Float
+  fun damped_spring_get_rest_length = cpDampedSpringGetRestLength(constraint : Constraint) : Float
   
-  fun damped_spring_set_rest_length = "cpDampedSpringSetRestLength"(constraint : Constraint, rest_length : Float) : Void
+  fun damped_spring_set_rest_length = cpDampedSpringSetRestLength(constraint : Constraint, rest_length : Float)
   
-  fun damped_spring_get_stiffness = "cpDampedSpringGetStiffness"(constraint : Constraint) : Float
+  fun damped_spring_get_stiffness = cpDampedSpringGetStiffness(constraint : Constraint) : Float
   
-  fun damped_spring_set_stiffness = "cpDampedSpringSetStiffness"(constraint : Constraint, stiffness : Float) : Void
+  fun damped_spring_set_stiffness = cpDampedSpringSetStiffness(constraint : Constraint, stiffness : Float)
   
-  fun damped_spring_get_damping = "cpDampedSpringGetDamping"(constraint : Constraint) : Float
+  fun damped_spring_get_damping = cpDampedSpringGetDamping(constraint : Constraint) : Float
   
-  fun damped_spring_set_damping = "cpDampedSpringSetDamping"(constraint : Constraint, damping : Float) : Void
+  fun damped_spring_set_damping = cpDampedSpringSetDamping(constraint : Constraint, damping : Float)
   
-  fun damped_spring_get_spring_force_func = "cpDampedSpringGetSpringForceFunc"(constraint : Constraint) : DampedSpringForceFunc
+  fun damped_spring_get_spring_force_func = cpDampedSpringGetSpringForceFunc(constraint : Constraint) : DampedSpringForceFunc
   
-  fun damped_spring_set_spring_force_func = "cpDampedSpringSetSpringForceFunc"(constraint : Constraint, spring_force_func : DampedSpringForceFunc) : Void
+  fun damped_spring_set_spring_force_func = cpDampedSpringSetSpringForceFunc(constraint : Constraint, spring_force_func : DampedSpringForceFunc)
   
-  fun constraint_is_damped_rotary_spring = "cpConstraintIsDampedRotarySpring"(constraint : Constraint) : Bool
+  fun constraint_is_damped_rotary_spring = cpConstraintIsDampedRotarySpring(constraint : Constraint) : Bool
   
   alias DampedRotarySpringTorqueFunc = (Constraint, Float) -> Float
   
-  fun damped_rotary_spring_alloc = "cpDampedRotarySpringAlloc"() : DampedRotarySpring
+  fun damped_rotary_spring_alloc = cpDampedRotarySpringAlloc() : DampedRotarySpring
   
-  fun damped_rotary_spring_init = "cpDampedRotarySpringInit"(joint : DampedRotarySpring, a : Body, b : Body, rest_angle : Float, stiffness : Float, damping : Float) : DampedRotarySpring
+  fun damped_rotary_spring_init = cpDampedRotarySpringInit(joint : DampedRotarySpring, a : Body, b : Body, rest_angle : Float, stiffness : Float, damping : Float) : DampedRotarySpring
   
-  fun damped_rotary_spring_new = "cpDampedRotarySpringNew"(a : Body, b : Body, rest_angle : Float, stiffness : Float, damping : Float) : Constraint
+  fun damped_rotary_spring_new = cpDampedRotarySpringNew(a : Body, b : Body, rest_angle : Float, stiffness : Float, damping : Float) : Constraint
   
-  fun damped_rotary_spring_get_rest_angle = "cpDampedRotarySpringGetRestAngle"(constraint : Constraint) : Float
+  fun damped_rotary_spring_get_rest_angle = cpDampedRotarySpringGetRestAngle(constraint : Constraint) : Float
   
-  fun damped_rotary_spring_set_rest_angle = "cpDampedRotarySpringSetRestAngle"(constraint : Constraint, rest_angle : Float) : Void
+  fun damped_rotary_spring_set_rest_angle = cpDampedRotarySpringSetRestAngle(constraint : Constraint, rest_angle : Float)
   
-  fun damped_rotary_spring_get_stiffness = "cpDampedRotarySpringGetStiffness"(constraint : Constraint) : Float
+  fun damped_rotary_spring_get_stiffness = cpDampedRotarySpringGetStiffness(constraint : Constraint) : Float
   
-  fun damped_rotary_spring_set_stiffness = "cpDampedRotarySpringSetStiffness"(constraint : Constraint, stiffness : Float) : Void
+  fun damped_rotary_spring_set_stiffness = cpDampedRotarySpringSetStiffness(constraint : Constraint, stiffness : Float)
   
-  fun damped_rotary_spring_get_damping = "cpDampedRotarySpringGetDamping"(constraint : Constraint) : Float
+  fun damped_rotary_spring_get_damping = cpDampedRotarySpringGetDamping(constraint : Constraint) : Float
   
-  fun damped_rotary_spring_set_damping = "cpDampedRotarySpringSetDamping"(constraint : Constraint, damping : Float) : Void
+  fun damped_rotary_spring_set_damping = cpDampedRotarySpringSetDamping(constraint : Constraint, damping : Float)
   
-  fun damped_rotary_spring_get_spring_torque_func = "cpDampedRotarySpringGetSpringTorqueFunc"(constraint : Constraint) : DampedRotarySpringTorqueFunc
+  fun damped_rotary_spring_get_spring_torque_func = cpDampedRotarySpringGetSpringTorqueFunc(constraint : Constraint) : DampedRotarySpringTorqueFunc
   
-  fun damped_rotary_spring_set_spring_torque_func = "cpDampedRotarySpringSetSpringTorqueFunc"(constraint : Constraint, spring_torque_func : DampedRotarySpringTorqueFunc) : Void
+  fun damped_rotary_spring_set_spring_torque_func = cpDampedRotarySpringSetSpringTorqueFunc(constraint : Constraint, spring_torque_func : DampedRotarySpringTorqueFunc)
   
-  fun constraint_is_rotary_limit_joint = "cpConstraintIsRotaryLimitJoint"(constraint : Constraint) : Bool
+  fun constraint_is_rotary_limit_joint = cpConstraintIsRotaryLimitJoint(constraint : Constraint) : Bool
   
-  fun rotary_limit_joint_alloc = "cpRotaryLimitJointAlloc"() : RotaryLimitJoint
+  fun rotary_limit_joint_alloc = cpRotaryLimitJointAlloc() : RotaryLimitJoint
   
-  fun rotary_limit_joint_init = "cpRotaryLimitJointInit"(joint : RotaryLimitJoint, a : Body, b : Body, min : Float, max : Float) : RotaryLimitJoint
+  fun rotary_limit_joint_init = cpRotaryLimitJointInit(joint : RotaryLimitJoint, a : Body, b : Body, min : Float, max : Float) : RotaryLimitJoint
   
-  fun rotary_limit_joint_new = "cpRotaryLimitJointNew"(a : Body, b : Body, min : Float, max : Float) : Constraint
+  fun rotary_limit_joint_new = cpRotaryLimitJointNew(a : Body, b : Body, min : Float, max : Float) : Constraint
   
-  fun rotary_limit_joint_get_min = "cpRotaryLimitJointGetMin"(constraint : Constraint) : Float
+  fun rotary_limit_joint_get_min = cpRotaryLimitJointGetMin(constraint : Constraint) : Float
   
-  fun rotary_limit_joint_set_min = "cpRotaryLimitJointSetMin"(constraint : Constraint, min : Float) : Void
+  fun rotary_limit_joint_set_min = cpRotaryLimitJointSetMin(constraint : Constraint, min : Float)
   
-  fun rotary_limit_joint_get_max = "cpRotaryLimitJointGetMax"(constraint : Constraint) : Float
+  fun rotary_limit_joint_get_max = cpRotaryLimitJointGetMax(constraint : Constraint) : Float
   
-  fun rotary_limit_joint_set_max = "cpRotaryLimitJointSetMax"(constraint : Constraint, max : Float) : Void
+  fun rotary_limit_joint_set_max = cpRotaryLimitJointSetMax(constraint : Constraint, max : Float)
   
-  fun constraint_is_ratchet_joint = "cpConstraintIsRatchetJoint"(constraint : Constraint) : Bool
+  fun constraint_is_ratchet_joint = cpConstraintIsRatchetJoint(constraint : Constraint) : Bool
   
-  fun ratchet_joint_alloc = "cpRatchetJointAlloc"() : RatchetJoint
+  fun ratchet_joint_alloc = cpRatchetJointAlloc() : RatchetJoint
   
-  fun ratchet_joint_init = "cpRatchetJointInit"(joint : RatchetJoint, a : Body, b : Body, phase : Float, ratchet : Float) : RatchetJoint
+  fun ratchet_joint_init = cpRatchetJointInit(joint : RatchetJoint, a : Body, b : Body, phase : Float, ratchet : Float) : RatchetJoint
   
-  fun ratchet_joint_new = "cpRatchetJointNew"(a : Body, b : Body, phase : Float, ratchet : Float) : Constraint
+  fun ratchet_joint_new = cpRatchetJointNew(a : Body, b : Body, phase : Float, ratchet : Float) : Constraint
   
-  fun ratchet_joint_get_angle = "cpRatchetJointGetAngle"(constraint : Constraint) : Float
+  fun ratchet_joint_get_angle = cpRatchetJointGetAngle(constraint : Constraint) : Float
   
-  fun ratchet_joint_set_angle = "cpRatchetJointSetAngle"(constraint : Constraint, angle : Float) : Void
+  fun ratchet_joint_set_angle = cpRatchetJointSetAngle(constraint : Constraint, angle : Float)
   
-  fun ratchet_joint_get_phase = "cpRatchetJointGetPhase"(constraint : Constraint) : Float
+  fun ratchet_joint_get_phase = cpRatchetJointGetPhase(constraint : Constraint) : Float
   
-  fun ratchet_joint_set_phase = "cpRatchetJointSetPhase"(constraint : Constraint, phase : Float) : Void
+  fun ratchet_joint_set_phase = cpRatchetJointSetPhase(constraint : Constraint, phase : Float)
   
-  fun ratchet_joint_get_ratchet = "cpRatchetJointGetRatchet"(constraint : Constraint) : Float
+  fun ratchet_joint_get_ratchet = cpRatchetJointGetRatchet(constraint : Constraint) : Float
   
-  fun ratchet_joint_set_ratchet = "cpRatchetJointSetRatchet"(constraint : Constraint, ratchet : Float) : Void
+  fun ratchet_joint_set_ratchet = cpRatchetJointSetRatchet(constraint : Constraint, ratchet : Float)
   
-  fun constraint_is_gear_joint = "cpConstraintIsGearJoint"(constraint : Constraint) : Bool
+  fun constraint_is_gear_joint = cpConstraintIsGearJoint(constraint : Constraint) : Bool
   
-  fun gear_joint_alloc = "cpGearJointAlloc"() : GearJoint
+  fun gear_joint_alloc = cpGearJointAlloc() : GearJoint
   
-  fun gear_joint_init = "cpGearJointInit"(joint : GearJoint, a : Body, b : Body, phase : Float, ratio : Float) : GearJoint
+  fun gear_joint_init = cpGearJointInit(joint : GearJoint, a : Body, b : Body, phase : Float, ratio : Float) : GearJoint
   
-  fun gear_joint_new = "cpGearJointNew"(a : Body, b : Body, phase : Float, ratio : Float) : Constraint
+  fun gear_joint_new = cpGearJointNew(a : Body, b : Body, phase : Float, ratio : Float) : Constraint
   
-  fun gear_joint_get_phase = "cpGearJointGetPhase"(constraint : Constraint) : Float
+  fun gear_joint_get_phase = cpGearJointGetPhase(constraint : Constraint) : Float
   
-  fun gear_joint_set_phase = "cpGearJointSetPhase"(constraint : Constraint, phase : Float) : Void
+  fun gear_joint_set_phase = cpGearJointSetPhase(constraint : Constraint, phase : Float)
   
-  fun gear_joint_get_ratio = "cpGearJointGetRatio"(constraint : Constraint) : Float
+  fun gear_joint_get_ratio = cpGearJointGetRatio(constraint : Constraint) : Float
   
-  fun gear_joint_set_ratio = "cpGearJointSetRatio"(constraint : Constraint, ratio : Float) : Void
+  fun gear_joint_set_ratio = cpGearJointSetRatio(constraint : Constraint, ratio : Float)
   
   type SimpleMotor = Void*
   
-  fun constraint_is_simple_motor = "cpConstraintIsSimpleMotor"(constraint : Constraint) : Bool
+  fun constraint_is_simple_motor = cpConstraintIsSimpleMotor(constraint : Constraint) : Bool
   
-  fun simple_motor_alloc = "cpSimpleMotorAlloc"() : SimpleMotor
+  fun simple_motor_alloc = cpSimpleMotorAlloc() : SimpleMotor
   
-  fun simple_motor_init = "cpSimpleMotorInit"(joint : SimpleMotor, a : Body, b : Body, rate : Float) : SimpleMotor
+  fun simple_motor_init = cpSimpleMotorInit(joint : SimpleMotor, a : Body, b : Body, rate : Float) : SimpleMotor
   
-  fun simple_motor_new = "cpSimpleMotorNew"(a : Body, b : Body, rate : Float) : Constraint
+  fun simple_motor_new = cpSimpleMotorNew(a : Body, b : Body, rate : Float) : Constraint
   
-  fun simple_motor_get_rate = "cpSimpleMotorGetRate"(constraint : Constraint) : Float
+  fun simple_motor_get_rate = cpSimpleMotorGetRate(constraint : Constraint) : Float
   
-  fun simple_motor_set_rate = "cpSimpleMotorSetRate"(constraint : Constraint, rate : Float) : Void
+  fun simple_motor_set_rate = cpSimpleMotorSetRate(constraint : Constraint, rate : Float)
   
   alias CollisionBeginFunc = (Arbiter, Space, DataPointer) -> Bool
   
   alias CollisionPreSolveFunc = (Arbiter, Space, DataPointer) -> Bool
   
-  alias CollisionPostSolveFunc = (Arbiter, Space, DataPointer) -> Void
+  alias CollisionPostSolveFunc = (Arbiter, Space, DataPointer) ->
   
-  alias CollisionSeparateFunc = (Arbiter, Space, DataPointer) -> Void
+  alias CollisionSeparateFunc = (Arbiter, Space, DataPointer) ->
   
   struct CollisionHandler
     type_a : CollisionType
@@ -771,127 +771,127 @@ lib CP
     user_data : DataPointer
   end
   
-  fun space_alloc = "cpSpaceAlloc"() : Space
+  fun space_alloc = cpSpaceAlloc() : Space
   
-  fun space_init = "cpSpaceInit"(space : Space) : Space
+  fun space_init = cpSpaceInit(space : Space) : Space
   
-  fun space_new = "cpSpaceNew"() : Space
+  fun space_new = cpSpaceNew() : Space
   
-  fun space_destroy = "cpSpaceDestroy"(space : Space) : Void
+  fun space_destroy = cpSpaceDestroy(space : Space)
   
-  fun space_free = "cpSpaceFree"(space : Space) : Void
+  fun space_free = cpSpaceFree(space : Space)
   
-  fun space_get_iterations = "cpSpaceGetIterations"(space : Space) : Int32
+  fun space_get_iterations = cpSpaceGetIterations(space : Space) : Int32
   
-  fun space_set_iterations = "cpSpaceSetIterations"(space : Space, iterations : Int32) : Void
+  fun space_set_iterations = cpSpaceSetIterations(space : Space, iterations : Int32)
   
-  fun space_get_gravity = "cpSpaceGetGravity"(space : Space) : Vect
+  fun space_get_gravity = cpSpaceGetGravity(space : Space) : Vect
   
-  fun space_set_gravity = "cpSpaceSetGravity"(space : Space, gravity : Vect) : Void
+  fun space_set_gravity = cpSpaceSetGravity(space : Space, gravity : Vect)
   
-  fun space_get_damping = "cpSpaceGetDamping"(space : Space) : Float
+  fun space_get_damping = cpSpaceGetDamping(space : Space) : Float
   
-  fun space_set_damping = "cpSpaceSetDamping"(space : Space, damping : Float) : Void
+  fun space_set_damping = cpSpaceSetDamping(space : Space, damping : Float)
   
-  fun space_get_idle_speed_threshold = "cpSpaceGetIdleSpeedThreshold"(space : Space) : Float
+  fun space_get_idle_speed_threshold = cpSpaceGetIdleSpeedThreshold(space : Space) : Float
   
-  fun space_set_idle_speed_threshold = "cpSpaceSetIdleSpeedThreshold"(space : Space, idle_speed_threshold : Float) : Void
+  fun space_set_idle_speed_threshold = cpSpaceSetIdleSpeedThreshold(space : Space, idle_speed_threshold : Float)
   
-  fun space_get_sleep_time_threshold = "cpSpaceGetSleepTimeThreshold"(space : Space) : Float
+  fun space_get_sleep_time_threshold = cpSpaceGetSleepTimeThreshold(space : Space) : Float
   
-  fun space_set_sleep_time_threshold = "cpSpaceSetSleepTimeThreshold"(space : Space, sleep_time_threshold : Float) : Void
+  fun space_set_sleep_time_threshold = cpSpaceSetSleepTimeThreshold(space : Space, sleep_time_threshold : Float)
   
-  fun space_get_collision_slop = "cpSpaceGetCollisionSlop"(space : Space) : Float
+  fun space_get_collision_slop = cpSpaceGetCollisionSlop(space : Space) : Float
   
-  fun space_set_collision_slop = "cpSpaceSetCollisionSlop"(space : Space, collision_slop : Float) : Void
+  fun space_set_collision_slop = cpSpaceSetCollisionSlop(space : Space, collision_slop : Float)
   
-  fun space_get_collision_bias = "cpSpaceGetCollisionBias"(space : Space) : Float
+  fun space_get_collision_bias = cpSpaceGetCollisionBias(space : Space) : Float
   
-  fun space_set_collision_bias = "cpSpaceSetCollisionBias"(space : Space, collision_bias : Float) : Void
+  fun space_set_collision_bias = cpSpaceSetCollisionBias(space : Space, collision_bias : Float)
   
-  fun space_get_collision_persistence = "cpSpaceGetCollisionPersistence"(space : Space) : Timestamp
+  fun space_get_collision_persistence = cpSpaceGetCollisionPersistence(space : Space) : Timestamp
   
-  fun space_set_collision_persistence = "cpSpaceSetCollisionPersistence"(space : Space, collision_persistence : Timestamp) : Void
+  fun space_set_collision_persistence = cpSpaceSetCollisionPersistence(space : Space, collision_persistence : Timestamp)
   
-  fun space_get_user_data = "cpSpaceGetUserData"(space : Space) : DataPointer
+  fun space_get_user_data = cpSpaceGetUserData(space : Space) : DataPointer
   
-  fun space_set_user_data = "cpSpaceSetUserData"(space : Space, user_data : DataPointer) : Void
+  fun space_set_user_data = cpSpaceSetUserData(space : Space, user_data : DataPointer)
   
-  fun space_get_static_body = "cpSpaceGetStaticBody"(space : Space) : Body
+  fun space_get_static_body = cpSpaceGetStaticBody(space : Space) : Body
   
-  fun space_get_current_time_step = "cpSpaceGetCurrentTimeStep"(space : Space) : Float
+  fun space_get_current_time_step = cpSpaceGetCurrentTimeStep(space : Space) : Float
   
-  fun space_is_locked = "cpSpaceIsLocked"(space : Space) : Bool
+  fun space_is_locked = cpSpaceIsLocked(space : Space) : Bool
   
-  fun space_add_default_collision_handler = "cpSpaceAddDefaultCollisionHandler"(space : Space) : CollisionHandler*
+  fun space_add_default_collision_handler = cpSpaceAddDefaultCollisionHandler(space : Space) : CollisionHandler*
   
-  fun space_add_collision_handler = "cpSpaceAddCollisionHandler"(space : Space, a : CollisionType, b : CollisionType) : CollisionHandler*
+  fun space_add_collision_handler = cpSpaceAddCollisionHandler(space : Space, a : CollisionType, b : CollisionType) : CollisionHandler*
   
-  fun space_add_wildcard_handler = "cpSpaceAddWildcardHandler"(space : Space, type : CollisionType) : CollisionHandler*
+  fun space_add_wildcard_handler = cpSpaceAddWildcardHandler(space : Space, type : CollisionType) : CollisionHandler*
   
-  fun space_add_shape = "cpSpaceAddShape"(space : Space, shape : Shape) : Shape
+  fun space_add_shape = cpSpaceAddShape(space : Space, shape : Shape) : Shape
   
-  fun space_add_body = "cpSpaceAddBody"(space : Space, body : Body) : Body
+  fun space_add_body = cpSpaceAddBody(space : Space, body : Body) : Body
   
-  fun space_add_constraint = "cpSpaceAddConstraint"(space : Space, constraint : Constraint) : Constraint
+  fun space_add_constraint = cpSpaceAddConstraint(space : Space, constraint : Constraint) : Constraint
   
-  fun space_remove_shape = "cpSpaceRemoveShape"(space : Space, shape : Shape) : Void
+  fun space_remove_shape = cpSpaceRemoveShape(space : Space, shape : Shape)
   
-  fun space_remove_body = "cpSpaceRemoveBody"(space : Space, body : Body) : Void
+  fun space_remove_body = cpSpaceRemoveBody(space : Space, body : Body)
   
-  fun space_remove_constraint = "cpSpaceRemoveConstraint"(space : Space, constraint : Constraint) : Void
+  fun space_remove_constraint = cpSpaceRemoveConstraint(space : Space, constraint : Constraint)
   
-  fun space_contains_shape = "cpSpaceContainsShape"(space : Space, shape : Shape) : Bool
+  fun space_contains_shape = cpSpaceContainsShape(space : Space, shape : Shape) : Bool
   
-  fun space_contains_body = "cpSpaceContainsBody"(space : Space, body : Body) : Bool
+  fun space_contains_body = cpSpaceContainsBody(space : Space, body : Body) : Bool
   
-  fun space_contains_constraint = "cpSpaceContainsConstraint"(space : Space, constraint : Constraint) : Bool
+  fun space_contains_constraint = cpSpaceContainsConstraint(space : Space, constraint : Constraint) : Bool
   
-  alias PostStepFunc = (Space, Void*, Void*) -> Void
+  alias PostStepFunc = (Space, Void*, Void*) ->
   
-  fun space_add_post_step_callback = "cpSpaceAddPostStepCallback"(space : Space, func : PostStepFunc, key : Void*, data : Void*) : Bool
+  fun space_add_post_step_callback = cpSpaceAddPostStepCallback(space : Space, func : PostStepFunc, key : Void*, data : Void*) : Bool
   
-  alias SpacePointQueryFunc = (Shape, Vect, Float, Vect, Void*) -> Void
+  alias SpacePointQueryFunc = (Shape, Vect, Float, Vect, Void*) ->
   
-  fun space_point_query = "cpSpacePointQuery"(space : Space, point : Vect, max_distance : Float, filter : ShapeFilter, func : SpacePointQueryFunc, data : Void*) : Void
+  fun space_point_query = cpSpacePointQuery(space : Space, point : Vect, max_distance : Float, filter : ShapeFilter, func : SpacePointQueryFunc, data : Void*)
   
-  fun space_point_query_nearest = "cpSpacePointQueryNearest"(space : Space, point : Vect, max_distance : Float, filter : ShapeFilter, out : PointQueryInfo*) : Shape
+  fun space_point_query_nearest = cpSpacePointQueryNearest(space : Space, point : Vect, max_distance : Float, filter : ShapeFilter, out : PointQueryInfo*) : Shape
   
-  alias SpaceSegmentQueryFunc = (Shape, Vect, Vect, Float, Void*) -> Void
+  alias SpaceSegmentQueryFunc = (Shape, Vect, Vect, Float, Void*) ->
   
-  fun space_segment_query = "cpSpaceSegmentQuery"(space : Space, start : Vect, end_ : Vect, radius : Float, filter : ShapeFilter, func : SpaceSegmentQueryFunc, data : Void*) : Void
+  fun space_segment_query = cpSpaceSegmentQuery(space : Space, start : Vect, end_ : Vect, radius : Float, filter : ShapeFilter, func : SpaceSegmentQueryFunc, data : Void*)
   
-  fun space_segment_query_first = "cpSpaceSegmentQueryFirst"(space : Space, start : Vect, end_ : Vect, radius : Float, filter : ShapeFilter, out : SegmentQueryInfo*) : Shape
+  fun space_segment_query_first = cpSpaceSegmentQueryFirst(space : Space, start : Vect, end_ : Vect, radius : Float, filter : ShapeFilter, out : SegmentQueryInfo*) : Shape
   
-  alias SpaceBBQueryFunc = (Shape, Void*) -> Void
+  alias SpaceBBQueryFunc = (Shape, Void*) ->
   
-  fun space_bb_query = "cpSpaceBBQuery"(space : Space, bb : BB, filter : ShapeFilter, func : SpaceBBQueryFunc, data : Void*) : Void
+  fun space_bb_query = cpSpaceBBQuery(space : Space, bb : BB, filter : ShapeFilter, func : SpaceBBQueryFunc, data : Void*)
   
-  alias SpaceShapeQueryFunc = (Shape, ContactPointSet*, Void*) -> Void
+  alias SpaceShapeQueryFunc = (Shape, ContactPointSet*, Void*) ->
   
-  fun space_shape_query = "cpSpaceShapeQuery"(space : Space, shape : Shape, func : SpaceShapeQueryFunc, data : Void*) : Bool
+  fun space_shape_query = cpSpaceShapeQuery(space : Space, shape : Shape, func : SpaceShapeQueryFunc, data : Void*) : Bool
   
-  alias SpaceBodyIteratorFunc = (Body, Void*) -> Void
+  alias SpaceBodyIteratorFunc = (Body, Void*) ->
   
-  fun space_each_body = "cpSpaceEachBody"(space : Space, func : SpaceBodyIteratorFunc, data : Void*) : Void
+  fun space_each_body = cpSpaceEachBody(space : Space, func : SpaceBodyIteratorFunc, data : Void*)
   
-  alias SpaceShapeIteratorFunc = (Shape, Void*) -> Void
+  alias SpaceShapeIteratorFunc = (Shape, Void*) ->
   
-  fun space_each_shape = "cpSpaceEachShape"(space : Space, func : SpaceShapeIteratorFunc, data : Void*) : Void
+  fun space_each_shape = cpSpaceEachShape(space : Space, func : SpaceShapeIteratorFunc, data : Void*)
   
-  alias SpaceConstraintIteratorFunc = (Constraint, Void*) -> Void
+  alias SpaceConstraintIteratorFunc = (Constraint, Void*) ->
   
-  fun space_each_constraint = "cpSpaceEachConstraint"(space : Space, func : SpaceConstraintIteratorFunc, data : Void*) : Void
+  fun space_each_constraint = cpSpaceEachConstraint(space : Space, func : SpaceConstraintIteratorFunc, data : Void*)
   
-  fun space_reindex_static = "cpSpaceReindexStatic"(space : Space) : Void
+  fun space_reindex_static = cpSpaceReindexStatic(space : Space)
   
-  fun space_reindex_shape = "cpSpaceReindexShape"(space : Space, shape : Shape) : Void
+  fun space_reindex_shape = cpSpaceReindexShape(space : Space, shape : Shape)
   
-  fun space_reindex_shapes_for_body = "cpSpaceReindexShapesForBody"(space : Space, body : Body) : Void
+  fun space_reindex_shapes_for_body = cpSpaceReindexShapesForBody(space : Space, body : Body)
   
-  fun space_use_spatial_hash = "cpSpaceUseSpatialHash"(space : Space, dim : Float, count : Int32) : Void
+  fun space_use_spatial_hash = cpSpaceUseSpatialHash(space : Space, dim : Float, count : Int32)
   
-  fun space_step = "cpSpaceStep"(space : Space, dt : Float) : Void
+  fun space_step = cpSpaceStep(space : Space, dt : Float)
   
   struct SpaceDebugColor
     r : Float32
@@ -900,15 +900,15 @@ lib CP
     a : Float32
   end
   
-  alias SpaceDebugDrawCircleImpl = (Vect, Float, Float, SpaceDebugColor, SpaceDebugColor, DataPointer) -> Void
+  alias SpaceDebugDrawCircleImpl = (Vect, Float, Float, SpaceDebugColor, SpaceDebugColor, DataPointer) ->
   
-  alias SpaceDebugDrawSegmentImpl = (Vect, Vect, SpaceDebugColor, DataPointer) -> Void
+  alias SpaceDebugDrawSegmentImpl = (Vect, Vect, SpaceDebugColor, DataPointer) ->
   
-  alias SpaceDebugDrawFatSegmentImpl = (Vect, Vect, Float, SpaceDebugColor, SpaceDebugColor, DataPointer) -> Void
+  alias SpaceDebugDrawFatSegmentImpl = (Vect, Vect, Float, SpaceDebugColor, SpaceDebugColor, DataPointer) ->
   
-  alias SpaceDebugDrawPolygonImpl = (Int32, Vect*, Float, SpaceDebugColor, SpaceDebugColor, DataPointer) -> Void
+  alias SpaceDebugDrawPolygonImpl = (Int32, Vect*, Float, SpaceDebugColor, SpaceDebugColor, DataPointer) ->
   
-  alias SpaceDebugDrawDotImpl = (Float, Vect, SpaceDebugColor, DataPointer) -> Void
+  alias SpaceDebugDrawDotImpl = (Float, Vect, SpaceDebugColor, DataPointer) ->
   
   alias SpaceDebugDrawColorForShapeImpl = (Shape, DataPointer) -> SpaceDebugColor
   
@@ -932,7 +932,7 @@ lib CP
     data : DataPointer
   end
   
-  fun space_debug_draw = "cpSpaceDebugDraw"(space : Space, options : SpaceDebugDrawOptions*) : Void
+  fun space_debug_draw = cpSpaceDebugDraw(space : Space, options : SpaceDebugDrawOptions*)
   
   VERSION_MAJOR = 7
   
@@ -940,25 +940,25 @@ lib CP
   
   VERSION_RELEASE = 0
   
-  fun moment_for_circle = "cpMomentForCircle"(m : Float, r1 : Float, r2 : Float, offset : Vect) : Float
+  fun moment_for_circle = cpMomentForCircle(m : Float, r1 : Float, r2 : Float, offset : Vect) : Float
   
-  fun area_for_circle = "cpAreaForCircle"(r1 : Float, r2 : Float) : Float
+  fun area_for_circle = cpAreaForCircle(r1 : Float, r2 : Float) : Float
   
-  fun moment_for_segment = "cpMomentForSegment"(m : Float, a : Vect, b : Vect, radius : Float) : Float
+  fun moment_for_segment = cpMomentForSegment(m : Float, a : Vect, b : Vect, radius : Float) : Float
   
-  fun area_for_segment = "cpAreaForSegment"(a : Vect, b : Vect, radius : Float) : Float
+  fun area_for_segment = cpAreaForSegment(a : Vect, b : Vect, radius : Float) : Float
   
-  fun moment_for_poly = "cpMomentForPoly"(m : Float, count : Int32, verts : Vect*, offset : Vect, radius : Float) : Float
+  fun moment_for_poly = cpMomentForPoly(m : Float, count : Int32, verts : Vect*, offset : Vect, radius : Float) : Float
   
-  fun area_for_poly = "cpAreaForPoly"(count : Int32, verts : Vect*, radius : Float) : Float
+  fun area_for_poly = cpAreaForPoly(count : Int32, verts : Vect*, radius : Float) : Float
   
-  fun centroid_for_poly = "cpCentroidForPoly"(count : Int32, verts : Vect*) : Vect
+  fun centroid_for_poly = cpCentroidForPoly(count : Int32, verts : Vect*) : Vect
   
-  fun moment_for_box = "cpMomentForBox"(m : Float, width : Float, height : Float) : Float
+  fun moment_for_box = cpMomentForBox(m : Float, width : Float, height : Float) : Float
   
-  fun moment_for_box2 = "cpMomentForBox2"(m : Float, box : BB) : Float
+  fun moment_for_box2 = cpMomentForBox2(m : Float, box : BB) : Float
   
-  fun convex_hull = "cpConvexHull"(count : Int32, verts : Vect*, result : Vect*, first : Int32*, tol : Float) : Int32
+  fun convex_hull = cpConvexHull(count : Int32, verts : Vect*, result : Vect*, first : Int32*, tol : Float) : Int32
 end
 
 module Chipmunk
@@ -1283,7 +1283,7 @@ module Chipmunk
     transform_new_transpose(((scale * axis.x) * axis.x) + (axis.y * axis.y), a, axis.x * b, a, (axis.x * axis.x) + ((scale * axis.y) * axis.y), axis.y * b)
   end
 
-  def spatial_index_destroy(index : SpatialIndex*) : Void
+  def spatial_index_destroy(index : SpatialIndex*)
     if (klass = index.value.klass)
       klass.value.destroy.call(index)
     end
@@ -1293,7 +1293,7 @@ module Chipmunk
     index.value.klass.value.count.call(index)
   end
 
-  def spatial_index_each(index : SpatialIndex*, func : SpatialIndexIteratorFunc, data : Void*) : Void
+  def spatial_index_each(index : SpatialIndex*, func : SpatialIndexIteratorFunc, data : Void*)
     index.value.klass.value.each.call(index, func, data)
   end
 
@@ -1301,31 +1301,31 @@ module Chipmunk
     index.value.klass.value.contains.call(index, obj, hashid)
   end
 
-  def spatial_index_insert(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
+  def spatial_index_insert(index : SpatialIndex*, obj : Void*, hashid : HashValue)
     index.value.klass.value.insert.call(index, obj, hashid)
   end
 
-  def spatial_index_remove(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
+  def spatial_index_remove(index : SpatialIndex*, obj : Void*, hashid : HashValue)
     index.value.klass.value.remove.call(index, obj, hashid)
   end
 
-  def spatial_index_reindex(index : SpatialIndex*) : Void
+  def spatial_index_reindex(index : SpatialIndex*)
     index.value.klass.value.reindex.call(index)
   end
 
-  def spatial_index_reindex_object(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
+  def spatial_index_reindex_object(index : SpatialIndex*, obj : Void*, hashid : HashValue)
     index.value.klass.value.reindex_object.call(index, obj, hashid)
   end
 
-  def spatial_index_query(index : SpatialIndex*, obj : Void*, bb : CP::BB, func : SpatialIndexQueryFunc, data : Void*) : Void
+  def spatial_index_query(index : SpatialIndex*, obj : Void*, bb : CP::BB, func : SpatialIndexQueryFunc, data : Void*)
     index.value.klass.value.query.call(index, obj, bb, func, data)
   end
 
-  def spatial_index_segment_query(index : SpatialIndex*, obj : Void*, a : CP::Vect, b : CP::Vect, t_exit : Float, func : SpatialIndexSegmentQueryFunc, data : Void*) : Void
+  def spatial_index_segment_query(index : SpatialIndex*, obj : Void*, a : CP::Vect, b : CP::Vect, t_exit : Float, func : SpatialIndexSegmentQueryFunc, data : Void*)
     index.value.klass.value.segment_query.call(index, obj, a, b, t_exit, func, data)
   end
 
-  def spatial_index_reindex_query(index : SpatialIndex*, func : SpatialIndexQueryFunc, data : Void*) : Void
+  def spatial_index_reindex_query(index : SpatialIndex*, func : SpatialIndexQueryFunc, data : Void*)
     index.value.klass.value.reindex_query.call(index, func, data)
   end
 
