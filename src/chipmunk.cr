@@ -129,11 +129,11 @@ lib CP
   
   type Sweep1D = Void*
   
-  fun sweep1_d_alloc = "cpSweep1DAlloc"() : Sweep1D
+  fun sweep1d_alloc = "cpSweep1DAlloc"() : Sweep1D
   
-  fun sweep1_d_init = "cpSweep1DInit"(sweep : Sweep1D, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun sweep1d_init = "cpSweep1DInit"(sweep : Sweep1D, bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
-  fun sweep1_d_new = "cpSweep1DNew"(bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
+  fun sweep1d_new = "cpSweep1DNew"(bbfunc : SpatialIndexBBFunc, static_index : SpatialIndex*) : SpatialIndex*
   
   alias SpatialIndexDestroyImpl = SpatialIndex* -> Void
   
@@ -964,35 +964,35 @@ end
 module Chipmunk
   extend self
 
-  def fmax(a, b)
+  def fmax(a : Number, b : Number) : Number
     a > b ? a : b
   end
 
-  def fmin(a, b)
+  def fmin(a : Number, b : Number) : Number
     a < b ? a : b
   end
 
-  def fabs(f)
+  def fabs(f : Number) : Number
     f < 0 ? -f : f
   end
 
-  def fclamp(f, min, max)
+  def fclamp(f : Number, min : Number, max : Number) : Number
     fmin(fmax(f, min), max)
   end
 
-  def fclamp01(f)
+  def fclamp01(f : Number) : Number
     fmax(0.0, fmin(f, 1.0))
   end
 
-  def flerp(f1, f2, t)
+  def flerp(f1 : Number, f2 : Number, t : Number) : Number
     (f1 * (1.0 - t)) + (f2 * t)
   end
 
-  def flerpconst(f1, f2, d)
+  def flerpconst(f1 : Number, f2 : Number, d : Number) : Number
     f1 + fclamp(f2 - f1, -d, d)
   end
 
-  def v(x, y) : CP::Vect
+  def v(x : Number, y : Number) : CP::Vect
     CP::Vect.new(x: x.to_f, y: y.to_f)
   end
 
@@ -1012,15 +1012,15 @@ module Chipmunk
     v(-v.x, -v.y)
   end
 
-  def vmult(v : CP::Vect, s : Float) : CP::Vect
+  def vmult(v : CP::Vect, s : Number) : CP::Vect
     v(v.x * s, v.y * s)
   end
 
-  def vdot(v1 : CP::Vect, v2 : CP::Vect) : Float
+  def vdot(v1 : CP::Vect, v2 : CP::Vect) : CP::Float
     (v1.x * v2.x) + (v1.y * v2.y)
   end
 
-  def vcross(v1 : CP::Vect, v2 : CP::Vect) : Float
+  def vcross(v1 : CP::Vect, v2 : CP::Vect) : CP::Float
     (v1.x * v2.y) - (v1.y * v2.x)
   end
 
@@ -1036,11 +1036,11 @@ module Chipmunk
     vmult(v2, vdot(v1, v2) / vdot(v2, v2))
   end
 
-  def vforangle(a : Float) : CP::Vect
+  def vforangle(a : Number) : CP::Vect
     v(Math.cos(a), Math.sin(a))
   end
 
-  def vtoangle(v : CP::Vect) : Float
+  def vtoangle(v : CP::Vect) : Float64
     Math.atan2(v.y, v.x)
   end
 
@@ -1052,76 +1052,76 @@ module Chipmunk
     v((v1.x * v2.x) + (v1.y * v2.y), (v1.y * v2.x) - (v1.x * v2.y))
   end
 
-  def vlengthsq(v : CP::Vect) : Float
+  def vlengthsq(v : CP::Vect) : CP::Float
     vdot(v, v)
   end
 
-  def vlength(v : CP::Vect) : Float
+  def vlength(v : CP::Vect) : Float64
     Math.sqrt(vdot(v, v))
   end
 
-  def vlerp(v1 : CP::Vect, v2 : CP::Vect, t : Float) : CP::Vect
+  def vlerp(v1 : CP::Vect, v2 : CP::Vect, t : Number) : CP::Vect
     vadd(vmult(v1, 1.0 - t), vmult(v2, t))
   end
 
   def vnormalize(v : CP::Vect) : CP::Vect
-    vmult(v, 1.0 / (vlength(v) + DBL_MIN))
+    vmult(v, 1.0 / (vlength(v) + Float64::MIN))
   end
 
-  def vslerp(v1 : CP::Vect, v2 : CP::Vect, t : Float) : CP::Vect
+  def vslerp(v1 : CP::Vect, v2 : CP::Vect, t : Number) : CP::Vect
     dot = vdot(vnormalize(v1), vnormalize(v2))
     omega = Math.acos(fclamp(dot, -1.0, 1.0))
     if omega < 1e-3
       vlerp(v1, v2, t)
     else
       denom = 1.0 / Math.sin(omega)
-      vadd(vmult(v1, Math.sin((1.0 - t) * omega) * denom), vmult(v2, sin(t * omega) * denom))
+      vadd(vmult(v1, Math.sin((1.0 - t) * omega) * denom), vmult(v2, Math.sin(t * omega) * denom))
     end
   end
 
-  def vslerpconst(v1 : CP::Vect, v2 : CP::Vect, a : Float) : CP::Vect
+  def vslerpconst(v1 : CP::Vect, v2 : CP::Vect, a : Number) : CP::Vect
     dot = vdot(vnormalize(v1), vnormalize(v2))
     omega = Math.acos(fclamp(dot, -1.0, 1.0))
     vslerp(v1, v2, fmin(a, omega) / omega)
   end
 
-  def vclamp(v : CP::Vect, len : Float) : CP::Vect
+  def vclamp(v : CP::Vect, len : Number) : CP::Vect
     vdot(v, v) > (len * len) ? vmult(vnormalize(v), len) : v
   end
 
-  def vlerpconst(v1 : CP::Vect, v2 : CP::Vect, d : Float) : CP::Vect
+  def vlerpconst(v1 : CP::Vect, v2 : CP::Vect, d : Number) : CP::Vect
     vadd(v1, vclamp(vsub(v2, v1), d))
   end
 
-  def vdist(v1 : CP::Vect, v2 : CP::Vect) : Float
+  def vdist(v1 : CP::Vect, v2 : CP::Vect) : Float64
     vlength(vsub(v1, v2))
   end
 
-  def vdistsq(v1 : CP::Vect, v2 : CP::Vect) : Float
+  def vdistsq(v1 : CP::Vect, v2 : CP::Vect) : Float64
     vlengthsq(vsub(v1, v2))
   end
 
-  def vnear(v1 : CP::Vect, v2 : CP::Vect, dist : Float) : Bool
+  def vnear(v1 : CP::Vect, v2 : CP::Vect, dist : Number) : Bool
     vdistsq(v1, v2) < (dist * dist)
   end
 
-  def mat2x2_new(a : Float, b : Float, c : Float, d : Float) : Mat2x2
-    CP::Mat2x2.new(a: a, b: b, c: c, d: d)
+  def mat2x2_new(a : Number, b : Number, c : Number, d : Number) : CP::Mat2x2
+    CP::Mat2x2.new(a: a.to_f, b: b.to_f, c: c.to_f, d: d.to_f)
   end
 
-  def mat2x2_transform(m : Mat2x2, v : CP::Vect) : CP::Vect
+  def mat2x2_transform(m : CP::Mat2x2, v : CP::Vect) : CP::Vect
     v((v.x * m.a) + (v.y * m.b), (v.x * m.c) + (v.y * m.d))
   end
 
-  def bb_new(l : Float, b : Float, r : Float, t : Float) : CP::BB
-    CP::BB.new(l: l, b: b, r: r, t: t)
+  def bb_new(l : Number, b : Number, r : Number, t : Number) : CP::BB
+    CP::BB.new(l: l.to_f, b: b.to_f, r: r.to_f, t: t.to_f)
   end
 
-  def bb_new_for_extents(c : CP::Vect, hw : Float, hh : Float) : CP::BB
-    bb_new(c.x - hw, c.y - hh, c.x + hw, c.y + hh);
+  def bb_new_for_extents(c : CP::Vect, hw : Number, hh : Number) : CP::BB
+    bb_new(c.x - hw, c.y - hh, c.x + hw, c.y + hh)
   end
 
-  def bb_new_for_circle(p : CP::Vect, r : Float) : CP::BB
+  def bb_new_for_circle(p : CP::Vect, r : Number) : CP::BB
     bb_new_for_extents(p, r, r)
   end
 
@@ -1149,15 +1149,15 @@ module Chipmunk
     vlerp(v(bb.l, bb.b), v(bb.r, bb.t), 0.5)
   end
 
-  def bb_area(bb : CP::BB) : Float
+  def bb_area(bb : CP::BB) : Float64
     (bb.r - bb.l) * (bb.t - bb.b)
   end
 
-  def bb_merged_area(a : CP::BB, b : CP::BB) : Float
+  def bb_merged_area(a : CP::BB, b : CP::BB) : Float64
     (fmax(a.r, b.r) - fmin(a.l, b.l)) * (fmax(a.t, b.t) - fmin(a.b, b.b))
   end
 
-  def bb_segment_query(bb : CP::BB, a : CP::Vect, b : CP::Vect) : Float
+  def bb_segment_query(bb : CP::BB, a : CP::Vect, b : CP::Vect) : Float64
     idx = 1.0 / (b.x - a.x)
     tx1 = bb.l == a.x ? -1e1000 : (bb.l - a.x) * idx
     tx2 = bb.r == a.x ? 1e1000 : (bb.r - a.x) * idx
@@ -1200,12 +1200,12 @@ module Chipmunk
     bb_new(bb.l + v.x, bb.b + v.y, bb.r + v.x, bb.t + v.y)
   end
   
-  def transform_new(a : Float, b : Float, c : Float, d : Float, tx : Float, ty : Float) : CP::Transform
-    CP::Transform.new(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
+  def transform_new(a : Number, b : Number, c : Number, d : Number, tx : Number, ty : Number) : CP::Transform
+    CP::Transform.new(a: a.to_f, b: b.to_f, c: c.to_f, d: d.to_f, tx: tx.to_f, ty: ty.to_f)
   end
 
-  def transform_new_transpose(a : Float, c : Float, tx : Float, b : Float, d : Float, ty : Float) : CP::Transform
-    CP::Transform.new(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
+  def transform_new_transpose(a : Number, c : Number, tx : Number, b : Number, d : Number, ty : Number) : CP::Transform
+    CP::Transform.new(a: a.to_f, b: b.to_f, c: c.to_f, d: d.to_f, tx: tx.to_f, ty: ty.to_f)
   end
 
   def transform_inverse(t : CP::Transform) : CP::Transform
@@ -1225,7 +1225,7 @@ module Chipmunk
     v((t.a * v.x) + (t.c * v.y), (t.b * v.x) + (t.d * v.y))
   end
 
-  def transformb_bb(t : CP::Transform, bb : CP::BB) : CP::BB
+  def transform_bb(t : CP::Transform, bb : CP::BB) : CP::BB
     center = bb_center(bb)
     hw = (bb.r - bb.l) * 0.5
     hh = (bb.t - bb.b) * 0.5
@@ -1242,16 +1242,16 @@ module Chipmunk
     transform_new_transpose(1.0, 0.0, translate.x, 0.0, 1.0, translate.y)
   end
 
-  def transform_scale(scale_x : Float, scale_y : Float) : CP::Transform
-    transform_new_transpose(scaleX, 0.0, 0.0, 0.0, scaleY, 0.0)
+  def transform_scale(scale_x : Number, scale_y : Number) : CP::Transform
+    transform_new_transpose(scale_x, 0.0, 0.0, 0.0, scale_y, 0.0)
   end
 
-  def transform_rotate(radians : Float) : CP::Transform
+  def transform_rotate(radians : Number) : CP::Transform
     rot = vforangle(radians)
     transform_new_transpose(rot.x, -rot.y, 0.0, rot.y, rot.x, 0.0)
   end
 
-  def transform_rigid(translate : CP::Vect, radians : Float) : CP::Transform
+  def transform_rigid(translate : CP::Vect, radians : Number) : CP::Transform
     rot = vforangle(radians)
     transform_new_transpose(rot.x, -rot.y, translate.x, rot.y, rot.x, translate.y)
   end
@@ -1277,62 +1277,63 @@ module Chipmunk
     transform_new_transpose(d.x, -d.y, v0.x, d.y, d.x, v0.y)
   end
 
-  def transform_axial_scale(axis : CP::Vect, pivot : CP::Vect, scale : Float) : CP::Transform
+  def transform_axial_scale(axis : CP::Vect, pivot : CP::Vect, scale : Number) : CP::Transform
     a = (axis.x * axis.y) * (scale - 1.0)
     b = vdot(axis, pivot) * (1.0 - scale)
     transform_new_transpose(((scale * axis.x) * axis.x) + (axis.y * axis.y), a, axis.x * b, a, (axis.x * axis.x) + ((scale * axis.y) * axis.y), axis.y * b)
   end
 
-#   def spatial_index_destroy(index : SpatialIndex*) : Void
-#     # if (index->klass)
-#     #   index->klass->destroy(index);
-#   end
-# 
-#   def spatial_index_count(index : SpatialIndex*) : Int32
-#     # return index->klass->count(index);
-#   end
-# 
-#   def spatial_index_each(index : SpatialIndex*, func : SpatialIndexIteratorFunc, data : Void*) : Void
-#     # index->klass->each(index, func, data);
-#   end
-# 
-#   def spatial_index_contains(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Bool
-#     # return index->klass->contains(index, obj, hashid);
-#   end
-# 
-#   def spatial_index_insert(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
-#     # index->klass->insert(index, obj, hashid);
-#   end
-# 
-#   def spatial_index_remove(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
-#     # index->klass->remove(index, obj, hashid);
-#   end
-# 
-#   def spatial_index_reindex(index : SpatialIndex*) : Void
-#     # index->klass->reindex(index);
-#   end
-# 
-#   def spatial_index_reindex_object(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
-#     # index->klass->reindexObject(index, obj, hashid);
-#   end
-# 
-#   def spatial_index_query(index : SpatialIndex*, obj : Void*, bb : CP::BB, func : SpatialIndexQueryFunc, data : Void*) : Void
-#     # index->klass->query(index, obj, bb, func, data);
-#   end
-# 
-#   def spatial_index_segment_query(index : SpatialIndex*, obj : Void*, a : CP::Vect, b : CP::Vect, t_exit : Float, func : SpatialIndexSegmentQueryFunc, data : Void*) : Void
-#     # index->klass->segmentQuery(index, obj, a, b, t_exit, func, data);
-#   end
-# 
-#   def spatial_index_reindex_query(index : SpatialIndex*, func : SpatialIndexQueryFunc, data : Void*) : Void
-#     # index->klass->reindexQuery(index, func, data);
-#   end
+  def spatial_index_destroy(index : SpatialIndex*) : Void
+    if (klass = index.value.klass)
+      klass.value.destroy.call(index)
+    end
+  end
+
+  def spatial_index_count(index : SpatialIndex*) : Int32
+    index.value.klass.value.count.call(index)
+  end
+
+  def spatial_index_each(index : SpatialIndex*, func : SpatialIndexIteratorFunc, data : Void*) : Void
+    index.value.klass.value.each.call(index, func, data)
+  end
+
+  def spatial_index_contains(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Bool
+    index.value.klass.value.contains.call(index, obj, hashid)
+  end
+
+  def spatial_index_insert(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
+    index.value.klass.value.insert.call(index, obj, hashid)
+  end
+
+  def spatial_index_remove(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
+    index.value.klass.value.remove.call(index, obj, hashid)
+  end
+
+  def spatial_index_reindex(index : SpatialIndex*) : Void
+    index.value.klass.value.reindex.call(index)
+  end
+
+  def spatial_index_reindex_object(index : SpatialIndex*, obj : Void*, hashid : HashValue) : Void
+    index.value.klass.value.reindex_object.call(index, obj, hashid)
+  end
+
+  def spatial_index_query(index : SpatialIndex*, obj : Void*, bb : CP::BB, func : SpatialIndexQueryFunc, data : Void*) : Void
+    index.value.klass.value.query.call(index, obj, bb, func, data)
+  end
+
+  def spatial_index_segment_query(index : SpatialIndex*, obj : Void*, a : CP::Vect, b : CP::Vect, t_exit : Float, func : SpatialIndexSegmentQueryFunc, data : Void*) : Void
+    index.value.klass.value.segment_query.call(index, obj, a, b, t_exit, func, data)
+  end
+
+  def spatial_index_reindex_query(index : SpatialIndex*, func : SpatialIndexQueryFunc, data : Void*) : Void
+    index.value.klass.value.reindex_query.call(index, func, data)
+  end
 
   def shape_filter_new(group : CP::Group, categories : CP::Bitmask, mask : CP::Bitmask) : CP::ShapeFilter
     CP::ShapeFilter.new(group: group, categories: categories, mask: mask)
   end
 
-  def closet_point_on_segment(p : CP::Vect, a : CP::Vect, b : CP::Vect) : CP::Vect
+  def closest_point_on_segment(p : CP::Vect, a : CP::Vect, b : CP::Vect) : CP::Vect
     delta = vsub(a, b)
     t = fclamp01(vdot(delta, vsub(p, b)) / vlengthsq(delta))
     vadd(b, vmult(delta, t))
